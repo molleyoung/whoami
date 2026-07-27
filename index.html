@@ -68,6 +68,8 @@
       font-size: .8rem;
     }
 
+    .topbar a { color: var(--green); text-decoration: none; }
+
     .status {
       display: flex;
       align-items: center;
@@ -372,6 +374,50 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
+    }
+
+    .proof-strip {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(0,0,0,.22);
+      overflow: hidden;
+    }
+
+    .proof-strip-label {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: .76rem;
+      letter-spacing: .06em;
+    }
+
+    .proof-strip-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .proof-strip-metric {
+      padding: 17px 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .proof-strip-metric:last-child { border-right: 0; }
+
+    .proof-strip-metric strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .proof-strip-link {
+      display: block;
+      padding: 12px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: .8rem;
+      text-decoration: none;
     }
 
     .artifact-desc {
@@ -815,6 +861,19 @@
         letter-spacing: -.055em;
       }
 
+      .proof-strip-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .proof-strip-metric {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .proof-strip-metric:last-child {
+        border-bottom: 0;
+      }
+
       .company-detail {
         min-height: auto;
       }
@@ -880,7 +939,7 @@
   <main class="wrap">
     <div class="topbar">
       <div class="status"><span class="dot"></span><span>molly-young / whoami</span></div>
-      <div>RevOps as Engineering · GTM Operating Systems · AI-enabled workflows</div>
+      <div>RevOps as Engineering · GTM Operating Systems · AI-enabled workflows · <a href="proof/">Proof Console →</a></div>
     </div>
 
     <section class="hero">
@@ -955,27 +1014,14 @@ pipeline:
           </div>
         </div>
 
-        <div class="kpi-grid">
-          <div class="proof">
-            <div class="num">6x</div>
-            <strong>Speed-to-lead</strong>
-            <span>Contact processing, routing automation, SLAs, alerts, rep visibility.</span>
+        <div class="proof-strip" aria-label="Selected proof">
+          <div class="proof-strip-label">SELECTED PROOF</div>
+          <div class="proof-strip-metrics">
+            <div class="proof-strip-metric"><strong>6x speed-to-lead</strong></div>
+            <div class="proof-strip-metric"><strong>50% faster quote approvals</strong></div>
+            <div class="proof-strip-metric"><strong>70% less rep data entry</strong></div>
           </div>
-          <div class="proof">
-            <div class="num">50%</div>
-            <strong>Faster quote approvals</strong>
-            <span>Pricing, product structure, approval workflows, CRM config, templates.</span>
-          </div>
-          <div class="proof">
-            <div class="num">70%</div>
-            <strong>Less rep data entry</strong>
-            <span>AI-enhanced MEDDPICC from call, meeting, and email intelligence.</span>
-          </div>
-          <div class="proof">
-            <div class="num">60+</div>
-            <strong>Closed-won checks</strong>
-            <span>Automated deal desk agent surfacing exceptions, stamping approvals.</span>
-          </div>
+          <a class="proof-strip-link" href="proof/">Explore the work →</a>
         </div>
       </div>
     </section>
@@ -1084,9 +1130,9 @@ pipeline:
         name: "Lumana",
         years: "2026-Present",
         role: "Senior Manager, Revenue Operations",
-        stage: "Barely out of stealth / early GTM",
-        badge: "Early GTM",
-        story: "Building the GTM operating foundation across top-of-funnel architecture, systems, signal-based outbound, forecasting, analytics, deal desk, and quote-to-cash in a barely-out-of-stealth environment.",
+        context: "Early-stage",
+        mandate: "Build + Engineer",
+        story: "Joined as the second Operations hire while Lumana was barely out of stealth, with broad full-funnel ownership across top-of-funnel architecture, GTM systems, signal-based outbound, forecasting, analytics, deal desk, and quote-to-cash.",
         built: [
           "Automated closed-won deal desk approval agent",
           "Signal-based outbound infrastructure",
@@ -1110,9 +1156,9 @@ pipeline:
         name: "Buildkite",
         years: "2023-2026",
         role: "Manager, Revenue Operations / Revenue Operations + BDR Manager",
-        stage: "Scale-up / first RevOps hire",
-        badge: "Scale-up",
-        story: "First RevOps hire supporting Sales, Marketing, BDR, Partnerships, Technical Services, and Finance; reporting to the CRO.",
+        context: "Growth-stage",
+        mandate: "Build",
+        story: "First RevOps hire, reporting to the CRO. Built both the Revenue Operations function and the BDR function while supporting Sales, Marketing, Partnerships, Technical Services, and Finance.",
         built: [
           "Lead-to-opportunity operating framework",
           "Quote-to-cash transformation",
@@ -1136,8 +1182,8 @@ pipeline:
         name: "Remote",
         years: "2021-2023",
         role: "Growth Systems & Operations / Sales Business Partner / Senior Sales Development Operations Manager",
-        stage: "Hypergrowth / second Sales Ops hire",
-        badge: "Early Ops + Hypergrowth",
+        context: "Hypergrowth",
+        mandate: "Scale + Optimize",
         story: "Second Sales Ops hire supporting Sales, BDR, Marketing, Finance, Product, and Partnerships during rapid global GTM expansion.",
         built: [
           "Global GTM processes and rules of engagement",
@@ -1161,8 +1207,8 @@ pipeline:
         name: "Fastly",
         years: "2019-2021",
         role: "Marketing Operations Manager",
-        stage: "Early-to-scale-up through IPO",
-        badge: "Early to IPO",
+        context: "Pre-IPO / IPO",
+        mandate: "Scale + Systematize",
         story: "Second Marketing Ops hire helping scale GTM operations through rapid growth, multiple acquisitions, and IPO-stage operating complexity.",
         built: [
           "Multi-source enrichment waterfall automation",
@@ -1186,8 +1232,8 @@ pipeline:
         name: "Mattermost",
         years: "2018-2019",
         role: "Marketing Operations Manager",
-        stage: "Early marketing and GTM ops",
-        badge: "Early Ops",
+        context: "Early-stage",
+        mandate: "Build",
         story: "Second Marketing hire reporting to the VP of Marketing, building early operational process around marketing automation and SDR support.",
         built: [
           "Marketing automation and process foundations",
@@ -1208,9 +1254,9 @@ pipeline:
         name: "GitLab",
         years: "2016-2018",
         role: "BDR Manager / BDR Team Lead / BDR",
-        stage: "Early GTM / foundational processes",
-        badge: "Early GTM",
-        story: "Early employee contributing to foundational GTM processes while moving from individual contributor into team leadership.",
+        context: "Hypergrowth",
+        mandate: "Build + Scale",
+        story: "Joined as an early BDR, then built and led inbound, outbound, and partner SDR/BDR motions through hypergrowth while moving from individual contributor into team leadership.",
         built: [
           "Global remote BDR / SDR team processes",
           "Onboarding and enablement programs",
@@ -1244,9 +1290,9 @@ pipeline:
           <div class="company-row">
             <div>
               <div class="company-name">${company.name}</div>
-              <div class="years">${company.years} · ${company.stage}</div>
+              <div class="years">${company.years} · ${company.context}</div>
             </div>
-            <div class="pill">${company.badge}</div>
+            <div class="pill">${company.mandate}</div>
           </div>
         `;
         button.addEventListener("click", () => {
@@ -1264,7 +1310,8 @@ pipeline:
           <div class="section-label">Story</div>
           <div class="detail-summary">${company.story}</div>
           <div class="detail-grid">
-            <div class="detail-card"><strong>Stage</strong><span>${company.stage}</span></div>
+            <div class="detail-card"><strong>Context</strong><span>${company.context}</span></div>
+            <div class="detail-card"><strong>Mandate</strong><span>${company.mandate}</span></div>
             <div class="detail-card"><strong>Role</strong><span>${company.role}</span></div>
             <div class="detail-card"><strong>Pattern</strong><span>Joined in an immature or changing GTM environment, then built the operating layer needed for the next stage.</span></div>
             <div class="detail-card"><strong>Operating thesis</strong><span>Make the work repeatable, visible, governable, and scalable beyond one person.</span></div>
@@ -1305,9 +1352,9 @@ pipeline:
           <div>
             <h3>${company.name}</h3>
             <div class="role">${company.role}</div>
-            <div class="stage">${company.years} · ${company.stage}</div>
+            <div class="stage">${company.years} · ${company.context}</div>
           </div>
-          <div class="pill">${company.badge}</div>
+          <div class="pill">${company.mandate}</div>
         </div>
 
         <div class="tabs">
