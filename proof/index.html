@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Molly Young's Proof Console: interactive inspections of GTM systems, workflows, decisions, and results." />
+  <title>Proof Console | Molly Young</title>
+  <link rel="stylesheet" href="proof.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <div class="status"><span class="dot"></span><span>molly-young / proof-console</span></div>
+      <a href="../">← whoami</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">PROOF CONSOLE</div>
+        <h1>What I built. How it works. What changed.</h1>
+        <p class="lead">Selected systems, workflows, decisions, and results from my work across GTM engineering, context engineering, analytics, and Revenue Operations.</p>
+      </div>
+      <aside class="model-rail" id="operatingModel" aria-label="Operating model"></aside>
+    </section>
+
+    <section class="console" aria-labelledby="activeCaseTitle">
+      <div class="console-bar">
+        <div class="case-command">
+          <label for="caseSelect"><span class="prompt">$</span> inspect case</label>
+          <select id="caseSelect" aria-label="Select a proof case"></select>
+        </div>
+        <div class="case-position" id="casePosition" aria-live="polite"></div>
+      </div>
+
+      <div class="filter-rail">
+        <span class="rail-label">Explore by capability:</span>
+        <div class="filters" id="capabilityFilters" aria-label="Explore cases by capability"></div>
+        <span class="filter-summary" id="filterSummary" aria-live="polite"></span>
+      </div>
+
+      <header class="case-header">
+        <div>
+          <div class="case-kicker" id="caseKicker"></div>
+          <h2 id="activeCaseTitle"></h2>
+          <p id="caseSummary"></p>
+        </div>
+        <span class="status-pill" id="caseStatus"></span>
+      </header>
+
+      <div class="view-tabs" id="viewTabs" role="tablist" aria-label="Case inspection mode"></div>
+
+      <section class="inspection" id="inspection" aria-live="polite"></section>
+    </section>
+
+    <section class="proof-registry" id="proof-registry" aria-labelledby="proofRegistryTitle">
+      <div class="section-heading">
+        <div class="section-label">PROOF POINTS / VERIFIED METRICS</div>
+        <h2 id="proofRegistryTitle">Evidence awaiting its full story</h2>
+        <p>Lightweight records keep verified claims attached to public-safe context while the complete cases are expanded.</p>
+      </div>
+      <div class="proof-records" id="proofRecords"></div>
+    </section>
+
+    <section class="repertoire" aria-labelledby="toolingTitle">
+      <div class="section-heading">
+        <div class="section-label">AI TOOLING / REPERTOIRE</div>
+        <h2 id="toolingTitle">Applied to operating work</h2>
+      </div>
+      <div class="tool-list" id="toolList"></div>
+    </section>
+
+    <section class="build-log" aria-labelledby="buildTitle">
+      <div class="log-head">
+        <div>
+          <span class="traffic"></span><span class="traffic"></span><span class="traffic"></span>
+        </div>
+        <span>git log -- proof-console</span>
+      </div>
+      <div class="log-body">
+        <div class="section-label">HOW THIS SITE WAS BUILT</div>
+        <h2 id="buildTitle">Directed by Molly. Implemented with Codex.</h2>
+        <div id="buildLog"></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>molly-young / proof-console</span>
+      <nav aria-label="Footer navigation">
+        <a href="../">Homepage</a>
+        <a href="../molly-young-v1.0.0.pdf" target="_blank" rel="noopener">Résumé</a>
+        <a href="https://www.linkedin.com/in/molleyoung/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </footer>
+  </main>
+
+  <script type="module" src="proof.js"></script>
+</body>
+</html>
