@@ -25,11 +25,6 @@ const elements = {
   buildLog: document.getElementById("buildLog")
 };
 
-let selectedCapability = "all";
-let selectedStoryId = stories[0].id;
-let selectedView = "system-map";
-let selectedSystem = null;
-
 const capabilityById = new Map(capabilities.map((item) => [item.id, item]));
 
 const representativeCaseByCapability = {
@@ -40,6 +35,24 @@ const representativeCaseByCapability = {
   "revenue-operations-governance": "closed-won-review-agent",
   "ai-enabled-operations": "sales-knowledge-agent"
 };
+
+function storyIdFromHash() {
+  const storyId = decodeURIComponent(window.location.hash.slice(1));
+  return stories.some((story) => story.id === storyId) ? storyId : null;
+}
+
+let selectedCapability = "all";
+let selectedStoryId = storyIdFromHash() ?? stories[0].id;
+let selectedView = "system-map";
+let selectedSystem = null;
+
+function updateCaseHash(storyId) {
+  if (!storyId || window.location.hash === `#${storyId}`) {
+    return;
+  }
+
+  window.history.replaceState(null, "", `#${storyId}`);
+}
 
 function currentStory() {
   return stories.find((story) => story.id === selectedStoryId) ?? null;
@@ -100,6 +113,7 @@ function renderFilters() {
 
       selectedView = "system-map";
       selectedSystem = null;
+      updateCaseHash(selectedStoryId);
       renderFilters();
       renderCaseNavigator();
       renderCase();
@@ -132,6 +146,7 @@ function renderCaseNavigator() {
     selectedStoryId = elements.caseSelect.value;
     selectedView = "system-map";
     selectedSystem = null;
+    updateCaseHash(selectedStoryId);
     renderCaseNavigator();
     renderCase();
   };
@@ -428,6 +443,22 @@ function renderBuildLog() {
     </div>
   `).join("");
 }
+
+window.addEventListener("hashchange", () => {
+  const storyId = storyIdFromHash();
+
+  if (!storyId) {
+    return;
+  }
+
+  selectedCapability = "all";
+  selectedStoryId = storyId;
+  selectedView = "system-map";
+  selectedSystem = null;
+  renderFilters();
+  renderCaseNavigator();
+  renderCase();
+});
 
 renderOperatingModel();
 renderFilters();
