@@ -68,7 +68,45 @@
       font-size: .8rem;
     }
 
-    .topbar a { color: var(--green); text-decoration: none; }
+    .topbar a { text-decoration: none; }
+
+    .topbar-tools {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+    }
+
+    .topbar-context { color: var(--muted); }
+
+    .view-nav {
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(0,0,0,.28);
+    }
+
+    .view-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 7px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .view-nav a[aria-current="page"] {
+      background: var(--green);
+      color: #031006;
+      box-shadow: 0 0 18px rgba(124,255,178,.18);
+    }
+
+    .view-state { font-size: .72rem; }
 
     .status {
       display: flex;
@@ -182,6 +220,27 @@
     }
 
     .cta:hover { transform: translateY(-1px); box-shadow: 0 0 40px rgba(124,255,178,.4); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .hero-actions .cta { margin-top: 0; }
+
+    .cta-secondary {
+      border: 1px solid rgba(124,255,178,.48);
+      background: rgba(124,255,178,.07);
+      color: var(--green);
+      box-shadow: none;
+    }
+
+    .cta-secondary:hover {
+      background: rgba(124,255,178,.12);
+      box-shadow: 0 0 30px rgba(124,255,178,.13);
+    }
 
     .triad {
       display: grid;
@@ -417,6 +476,63 @@
       color: var(--green);
       font-family: var(--mono);
       font-size: .8rem;
+      text-decoration: none;
+    }
+
+    .selected-proof-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .selected-proof-row {
+      display: grid;
+      grid-template-columns: 44px minmax(220px, .65fr) minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 17px 4px;
+      border-bottom: 1px solid var(--line);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .selected-proof-row:hover {
+      background: linear-gradient(90deg, rgba(124,255,178,.06), transparent 80%);
+    }
+
+    .selected-proof-index,
+    .selected-proof-status,
+    .selected-proof-arrow {
+      font-family: var(--mono);
+      font-size: .72rem;
+    }
+
+    .selected-proof-index,
+    .selected-proof-arrow { color: var(--green); }
+
+    .selected-proof-title {
+      display: grid;
+      gap: 5px;
+    }
+
+    .selected-proof-title strong { font-size: 1rem; }
+
+    .selected-proof-status {
+      width: fit-content;
+      color: var(--amber);
+      text-transform: uppercase;
+    }
+
+    .selected-proof-point {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .selected-proof-action {
+      display: inline-flex;
+      margin-top: 18px;
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: .82rem;
+      font-weight: 800;
       text-decoration: none;
     }
 
@@ -780,6 +896,16 @@
         line-height: 1.35;
       }
 
+      .topbar-tools {
+        width: 100%;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+
+      .topbar-context { max-width: 52%; }
+
+      .view-nav { flex: none; }
+
       .status span:last-child,
       .topbar > div:last-child,
       .identity .contact,
@@ -835,6 +961,17 @@
         justify-content: center;
         padding: 13px 14px;
         font-size: .82rem;
+      }
+
+      .hero-actions { flex-direction: column; }
+
+      .selected-proof-row {
+        grid-template-columns: 32px 1fr auto;
+        gap: 10px;
+      }
+
+      .selected-proof-point {
+        grid-column: 2 / -1;
       }
 
       .triad,
@@ -939,7 +1076,13 @@
   <main class="wrap">
     <div class="topbar">
       <div class="status"><span class="dot"></span><span>molly-young / whoami</span></div>
-      <div>RevOps as Engineering · GTM Operating Systems · AI-enabled workflows · <a href="proof/">Proof Console →</a></div>
+      <div class="topbar-tools">
+        <div class="topbar-context">RevOps as Engineering · GTM Operating Systems · AI-enabled workflows</div>
+        <nav class="view-nav" aria-label="Portfolio views">
+          <a href="./" aria-current="page"><span class="view-state" aria-hidden="true">●</span>RESUME</a>
+          <a href="proof/"><span class="view-state" aria-hidden="true">○</span>PROOF</a>
+        </nav>
+      </div>
     </div>
 
     <section class="hero">
@@ -956,7 +1099,11 @@
             <p class="lead">
               I came up wanting to build. My work connects systems, data, automation, revenue process, people, and vendors into the operating infrastructure a GTM org runs on.
             </p>
-<a class="cta" href="molly-young-v1.0.0.pdf" target="_blank" rel="noopener">$ download resume &nbsp;&rarr;</a>          </div>
+            <div class="hero-actions">
+              <a class="cta" href="molly-young-v1.0.0.pdf" target="_blank" rel="noopener">$ download resume &nbsp;&rarr;</a>
+              <a class="cta cta-secondary" href="proof/">Explore proof of work →</a>
+            </div>
+          </div>
 
           <div class="triad">
             <div class="triad-card">
@@ -1015,7 +1162,7 @@ pipeline:
         </div>
 
         <div class="proof-strip" aria-label="Selected proof">
-          <div class="proof-strip-label">SELECTED PROOF</div>
+          <div class="proof-strip-label">SELECTED IMPACT</div>
           <div class="proof-strip-metrics">
             <div class="proof-strip-metric"><strong>6x speed-to-lead</strong></div>
             <div class="proof-strip-metric"><strong>50% faster quote approvals</strong></div>
@@ -1024,6 +1171,46 @@ pipeline:
           <a class="proof-strip-link" href="proof/">Explore the work →</a>
         </div>
       </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>Selected Proof</h2>
+          <p>A closer look at the systems, decisions, and results behind the résumé.</p>
+        </div>
+      </div>
+
+      <div class="selected-proof-list">
+        <a class="selected-proof-row" href="proof/#quality-first-prospecting-engine">
+          <span class="selected-proof-index">01</span>
+          <span class="selected-proof-title">
+            <strong>Quality-First Prospecting Engine</strong>
+            <span class="selected-proof-status">Active + evolving</span>
+          </span>
+          <span class="selected-proof-point">Approximately 12.5% cumulative dial-to-connect on pickup-likelihood-scored contacts.</span>
+          <span class="selected-proof-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="selected-proof-row" href="proof/#closed-won-review-agent">
+          <span class="selected-proof-index">02</span>
+          <span class="selected-proof-title">
+            <strong>Closed Won Review Agent</strong>
+            <span class="selected-proof-status">Shipped</span>
+          </span>
+          <span class="selected-proof-point">Same-day approval increased from 60% to approximately 90%.</span>
+          <span class="selected-proof-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="selected-proof-row" href="proof/#event-import-pipeline">
+          <span class="selected-proof-index">03</span>
+          <span class="selected-proof-title">
+            <strong>Event Import Pipeline</strong>
+            <span class="selected-proof-status">Shipped</span>
+          </span>
+          <span class="selected-proof-point">More than 10 events processed, from approximately 5 records to more than 600 badge scans.</span>
+          <span class="selected-proof-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <a class="selected-proof-action" href="proof/">Open the Proof Console →</a>
     </section>
 
     <section class="section">
