@@ -859,7 +859,14 @@
 
     /* Mobile polish patch */
     @media (max-width: 820px) {
-      .proof-split,
+      .proof-split {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .proof-split > * {
+        min-width: 0;
+      }
+
       .kpi-grid {
         grid-template-columns: 1fr;
       }
