@@ -25,8 +25,6 @@ export const stories = [
   {
     id: "quality-first-prospecting-engine",
     title: "Quality-First Prospecting Engine",
-    status: "active",
-    statusLabel: "Active + evolving",
     featured: true,
     capabilities: ["gtm-systems-orchestration", "context-engineering", "analytics-revenue-intelligence", "ai-enabled-operations"],
     summary: "A recurring prospecting engine that connects eligible accounts, custom research, qualification, pickup-likelihood scoring, activation, and outcome visibility.",
@@ -130,8 +128,6 @@ export const stories = [
   {
     id: "closed-won-review-agent",
     title: "Closed Won Review Agent",
-    status: "shipped",
-    statusLabel: "Shipped",
     capabilities: ["gtm-systems-orchestration", "revenue-operations-governance", "ai-enabled-operations"],
     summary: "An unattended deal-review system that validates closed-won records, auto-approves clean deals, and sends actionable exceptions to Slack.",
     thesis: "Deterministic validation handles the rules; Claude handles address validation and human-readable fix guidance without adding work for Sales.",
@@ -165,8 +161,6 @@ export const stories = [
   {
     id: "event-import-pipeline",
     title: "Event Import Pipeline",
-    status: "shipped",
-    statusLabel: "Shipped",
     capabilities: ["gtm-systems-orchestration", "revenue-operations-governance"],
     summary: "A config-driven event-processing pipeline that cleans, reviews, routes, and activates event records while preserving every intermediate state.",
     thesis: "One event configuration drives a repeatable, auditable workflow from raw list to governed activation.",
@@ -202,8 +196,6 @@ export const stories = [
   {
     id: "sales-knowledge-agent",
     title: "Sales Knowledge Agent",
-    status: "mvp-rollout",
-    statusLabel: "MVP rollout",
     capabilities: ["context-engineering", "ai-enabled-operations", "revenue-operations-governance"],
     summary: "A custom Rovo agent that gives AEs and SDRs curated, sourced sales and product answers with governed connectors and access.",
     thesis: "Trusted answers require curated sources, naming controls, regional rules, and connector governance—not just a chat interface.",
@@ -235,8 +227,6 @@ export const stories = [
   {
     id: "gtm-insights-revenue-intelligence",
     title: "GTM Insights and Revenue Intelligence",
-    status: "active",
-    statusLabel: "Active",
     capabilities: ["analytics-revenue-intelligence", "context-engineering", "ai-enabled-operations"],
     summary: "A biweekly analysis workflow that turns activity, pipeline, and SaaS reporting into sourced statistical analysis and readable operating narratives.",
     thesis: "Revenue intelligence becomes useful when reporting, analysis, narrative, and publication run as one repeatable operating cadence.",
@@ -267,8 +257,6 @@ export const stories = [
   {
     id: "signal-based-outbound-engine",
     title: "Signal-Based Outbound Engine",
-    status: "building",
-    statusLabel: "Building",
     capabilities: ["gtm-systems-orchestration", "analytics-revenue-intelligence", "ai-enabled-operations"],
     summary: "An active build for normalizing disparate signals into transparent, trigger-based outbound plays and measurable rep prioritization.",
     thesis: "Signals should retain strength, recency, decay, and source context instead of collapsing into one opaque account score.",
@@ -300,8 +288,6 @@ export const stories = [
   {
     id: "gtm-context-layer",
     title: "GTM Context Layer",
-    status: "designing-building",
-    statusLabel: "Designing + building",
     capabilities: ["context-engineering", "revenue-operations-governance", "ai-enabled-operations"],
     summary: "A three-part context architecture that makes GTM data, business definitions, and AI runtime behavior inspectable and governable.",
     thesis: "Reliable AI work requires a shared understanding of the data, the business rules, and the runtime instructions used to interpret requests.",
@@ -329,8 +315,6 @@ export const stories = [
   {
     id: "revenue-lifecycle-redesign",
     title: "Revenue Lifecycle Redesign",
-    status: "designing",
-    statusLabel: "Designing",
     capabilities: ["revenue-operations-governance", "gtm-systems-orchestration", "analytics-revenue-intelligence"],
     summary: "A public-safe design for aligning buyer lifecycle, sales engagement, qualification, opportunity governance, automation, and funnel measurement.",
     thesis: "Lifecycle design must connect entry and exit criteria to automation and reporting so leakage can be inspected.",
@@ -360,21 +344,18 @@ export const proofPoints = [
     id: "speed-to-lead",
     title: "Speed-to-Lead",
     metric: "6x improvement",
-    status: "Proof point / full case to be expanded",
     context: "Contact processing, routing automation, SLAs, alerts, and rep visibility."
   },
   {
     id: "quote-approval-workflow",
     title: "Quote Approval Workflow",
     metric: "50% faster quote approvals",
-    status: "Proof point / full case to be expanded",
     context: "Pricing, product structure, approval workflows, CRM configuration, and templates."
   },
   {
     id: "ai-enhanced-meddpicc",
     title: "AI-Enhanced MEDDPICC",
     metric: "70% less rep data entry",
-    status: "Proof point / full case to be expanded",
     context: "MEDDPICC data derived from call, meeting, and email intelligence."
   }
 ];
