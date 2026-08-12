@@ -17,7 +17,6 @@ const elements = {
   caseKicker: document.getElementById("caseKicker"),
   title: document.getElementById("activeCaseTitle"),
   summary: document.getElementById("caseSummary"),
-  status: document.getElementById("caseStatus"),
   tabs: document.getElementById("viewTabs"),
   inspection: document.getElementById("inspection"),
   proofRecords: document.getElementById("proofRecords"),
@@ -135,7 +134,7 @@ function renderCaseNavigator() {
   elements.caseSelect.disabled = false;
   elements.caseSelect.innerHTML = filtered.map((story) => `
     <option value="${story.id}" ${story.id === selectedStoryId ? "selected" : ""}>
-      ${story.title} · ${story.statusLabel}
+      ${story.title}
     </option>
   `).join("");
 
@@ -159,8 +158,6 @@ function renderCase() {
     elements.caseKicker.textContent = "FILTER RESULT / EMPTY";
     elements.title.textContent = "No cases match this capability.";
     elements.summary.textContent = "Choose another capability or select All to restore the complete case navigator.";
-    elements.status.textContent = "No active case";
-    elements.status.className = "status-pill status-empty";
     elements.tabs.innerHTML = "";
     elements.inspection.innerHTML = `
       <div class="filter-empty-state">
@@ -175,8 +172,6 @@ function renderCase() {
   elements.caseKicker.textContent = story.featured ? "FEATURED SYSTEM / LIVE INSPECTION" : "PROOF CASE / LIVE INSPECTION";
   elements.title.textContent = story.title;
   elements.summary.textContent = story.summary;
-  elements.status.textContent = story.statusLabel;
-  elements.status.className = `status-pill status-${story.status}`;
   renderTabs();
   renderInspection();
 }
@@ -428,7 +423,6 @@ function renderProofPoints() {
         <strong>${record.metric}</strong>
       </div>
       <p>${record.context}</p>
-      <span>${record.status}</span>
     </article>
   `).join("");
 }
