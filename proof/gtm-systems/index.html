@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Selected GTM systems work by Molly Young: building the motion, improving it, and creating trusted context for better decisions." />
+  <title>GTM Systems | Molly Young</title>
+  <link rel="stylesheet" href="gtm-systems.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="mark" href="../../" aria-label="Molly Young home">M</a>
+    <nav aria-label="Portfolio navigation">
+      <a href="../../">Overview</a>
+      <a href="../" aria-current="page">Proof</a>
+      <a href="../../molly-young-v1.0.0.pdf">Resume</a>
+      <a href="mailto:mollyeyoung@gmail.com">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero page-width" aria-labelledby="page-title">
+      <span class="eyebrow">Selected work · GTM systems</span>
+      <h1 id="page-title">Building the operating system underneath GTM.</h1>
+      <p>I design and ship the infrastructure that connects signals, sellers, data and decisions, then measure whether it actually works. Three views of that work.</p>
+    </section>
+
+    <section class="proof-section page-width signal-section" aria-labelledby="signal-title">
+      <header class="proof-heading">
+        <div class="proof-number"><span>01</span><b>Build the motion</b></div>
+        <div>
+          <h2 id="signal-title">Signal to Sequence</h2>
+          <p>A prospecting architecture that turns scattered signals into prioritized rep action while preserving the context and history needed to learn from the outcome.</p>
+        </div>
+      </header>
+
+      <div class="role-line"><strong>My role</strong><span>· architecture · operating logic · workflows · systems</span></div>
+
+      <div class="signal-map" role="img" aria-label="Website activity, form fills, intent, SLED procurement, and hiring activity converge into one qualified account and durable Salesforce signal history. The account branches into relevant people, which are assigned an owner and priority. Automated and rep paths operate in parallel, reconnect at a reply or conversation, return to the owning rep, and exit to meeting and pipeline. Outcomes feed future prioritization.">
+        <div class="signal-stage input-stage">
+          <span class="map-label">Many inputs</span>
+          <ul class="signal-inputs">
+            <li>Website activity</li>
+            <li>Form fill</li>
+            <li>Intent</li>
+            <li>SLED procurement</li>
+            <li>Hiring / job activity</li>
+          </ul>
+        </div>
+
+        <div class="signal-stage account-stage">
+          <span class="map-label">Narrow to one account</span>
+          <div class="map-node qualified-node"><strong>Qualified account</strong><small>match · enrich · ICP fit · context</small></div>
+          <div class="vertical-link" aria-hidden="true"></div>
+          <div class="map-node history-node"><strong>Account + signal history</strong><small>Salesforce</small></div>
+        </div>
+
+        <div class="signal-stage people-stage">
+          <span class="map-label">One account → relevant people</span>
+          <div class="people-branch">
+            <div class="map-node"><strong>Executive buyer</strong></div>
+            <div class="map-node"><strong>Operational owner</strong></div>
+            <div class="map-node"><strong>Influencer</strong></div>
+          </div>
+        </div>
+
+        <div class="signal-stage decision-stage">
+          <span class="map-label">Decide</span>
+          <div class="map-node decision-node"><strong>Owner + priority</strong><small>territory · persona · signal strength</small><em>LeanData</em></div>
+        </div>
+
+        <div class="signal-stage activation-stage">
+          <span class="map-label">Activate in parallel</span>
+          <div class="activation-paths">
+            <div class="map-node"><span>Automated</span><strong>Email + LinkedIn</strong><small>Lemlist</small></div>
+            <div class="map-node"><span>Rep</span><strong>Call · email · direct outreach</strong><small>Outreach · Orum · Slack · Salesforce</small></div>
+          </div>
+          <p>automation + human execution</p>
+        </div>
+
+        <div class="signal-stage outcome-stage">
+          <span class="map-label">Conversation</span>
+          <div class="map-node"><strong>Reply / conversation</strong></div>
+          <div class="vertical-link" aria-hidden="true"></div>
+          <div class="map-node"><strong>Owning rep</strong></div>
+          <div class="pipeline-exit"><span>Meeting</span><i aria-hidden="true">→</i><strong>Pipeline</strong></div>
+        </div>
+
+        <div class="feedback-rail">
+          <span>engagement · replies · meetings · rep feedback</span>
+          <i aria-hidden="true">→</i>
+          <strong>future prioritization</strong>
+        </div>
+      </div>
+
+      <p class="human-line">Reps know who to work, why now, and what to do next. The outcome comes back into the system instead of disappearing into another tool.</p>
+
+      <section class="technical-rail" aria-labelledby="systems-layer-title">
+        <h3 id="systems-layer-title">Systems + engineering layer</h3>
+        <div class="systems-grid">
+          <div>
+            <span class="ai-role">AI in the motion</span>
+            <h4>Signal + research</h4>
+            <strong>Floqer · AI research agents · signal sources</strong>
+            <p>sourcing · enrichment · normalization · qualification · context</p>
+          </div>
+          <div>
+            <h4>CRM + operating data</h4>
+            <strong>Salesforce</strong>
+            <p>identity · account/contact matching · signal history · lifecycle · attribution · outcomes</p>
+          </div>
+          <div>
+            <h4>Routing + ownership</h4>
+            <strong>LeanData</strong>
+            <p>territory · owner assignment · routing · queue / priority</p>
+          </div>
+          <div>
+            <h4>Engagement</h4>
+            <strong>Lemlist · Outreach · Orum · Slack</strong>
+            <p>automated outreach · sequencing · calling · alerts · rep execution</p>
+          </div>
+          <div>
+            <span class="ai-role">AI to build + operate</span>
+            <h4>AI + programmatic build</h4>
+            <strong>Claude Code · FoundryOps / g-gremlin · n8n · Salesforce CLI</strong>
+            <p>research · build · inspect · query · automate · deploy · test · iterate</p>
+          </div>
+        </div>
+        <p class="systems-logic">AI research + context <i>·</i> deterministic qualification + routing logic <i>·</i> human seller judgment + execution</p>
+      </section>
+    </section>
+
+    <section class="proof-section full-bleed quality-section" aria-labelledby="quality-title">
+      <div class="page-width">
+        <header class="proof-heading">
+          <div class="proof-number"><span>02</span><b>Improve the motion</b></div>
+          <div>
+            <h2 id="quality-title">Quality-First Prospecting</h2>
+            <p>The original question was whether pickup-likelihood scoring could improve connect rates. The more important result was learning where the prospecting system itself needed to change.</p>
+          </div>
+        </header>
+
+        <div class="role-line"><strong>My role</strong><span>· experiment · analysis · diagnosis · iteration</span></div>
+
+        <ol class="experiment-timeline">
+          <li>
+            <span>1 · Hypothesis</span>
+            <strong>Improve connect rate</strong>
+            <small>score phone numbers by pickup likelihood</small>
+          </li>
+          <li class="early-result">
+            <span>2 · Early signal</span>
+            <strong>17–32%</strong>
+            <small>tiny samples · provisional</small>
+          </li>
+          <li class="scaled-result">
+            <span>3 · Scaled result</span>
+            <strong>~12.5% cumulative</strong>
+            <b>~9% as volume increased</b>
+            <small>team-wide dialing remained ~4–5%</small>
+          </li>
+          <li>
+            <span>4 · Diagnosis expands</span>
+            <ul>
+              <li>contact quality</li><li>phone quality</li><li>targeting</li><li>enrichment</li><li>rep execution</li><li>number reputation</li><li>adoption</li>
+            </ul>
+          </li>
+          <li>
+            <span>5 · System changes</span>
+            <ul>
+              <li>better sourcing</li><li>waterfall enrichment</li><li>weekly ICP / targeting refinement</li><li>repeatable prospect builds</li><li>routing + sequencing</li><li>continued measurement</li>
+            </ul>
+          </li>
+        </ol>
+
+        <div class="built-with" aria-label="Tools and roles used to build the prospecting experiment">
+          <strong>Built with</strong>
+          <span>TitanX · Floqer · Claude Code · g-gremlin · Salesforce · Outreach · Orum</span>
+          <p>pickup scoring · AI sourcing/enrichment · programmatic list build · CRM matching/routing · sequencing · dialing</p>
+        </div>
+
+        <div class="quality-footer">
+          <div class="pilot-funnel"><span>Early pilot snapshot</span><p><b>1,450</b> P1 dials <i>→</i> <b>182</b> connects <i>→</i> <b>93</b> conversations <i>→</i> <b>~7</b> SQLs / meetings</p></div>
+          <p class="durable-result">The durable result wasn't one score. It was a better prospecting system.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-section page-width knowledge-section" aria-labelledby="knowledge-title">
+      <header class="proof-heading">
+        <div class="proof-number"><span>03</span><b>Build trusted context</b></div>
+        <div>
+          <h2 id="knowledge-title">The GTM Knowledge Layer</h2>
+          <p>Product knowledge, operational definitions, and AI context each need an authoritative source. I built the publishing and governance paths that let people and AI consume the right version without recreating it by hand.</p>
+        </div>
+      </header>
+
+      <div class="role-line"><strong>My role</strong><span>· source-of-truth design · governance · publishing · delivery</span></div>
+
+      <div class="knowledge-map">
+        <section class="knowledge-lane product-lane" aria-labelledby="product-lane-title">
+          <header><span>Lane A</span><h3 id="product-lane-title">Product knowledge</h3></header>
+          <div class="lane-content">
+            <div class="lane-body">
+              <div class="knowledge-sources">
+                <div class="truth-source"><strong>GitHub product docs</strong><small>authoritative product source</small></div>
+                <div class="truth-source"><strong>Confluence</strong><small>approved internal knowledge</small></div>
+                <div class="truth-source"><strong>Google Drive / enablement</strong><small>approved knowledge where applicable</small></div>
+              </div>
+              <div class="lane-branch" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="audience-paths">
+                <div class="audience-path"><small>public docs</small><strong>Customers</strong><b>GitBook</b></div>
+                <div class="audience-path"><small>seller knowledge</small><strong>Sales Knowledge Agent</strong><b>Atlassian Rovo</b></div>
+                <div class="audience-path"><small>partner knowledge</small><strong>Partner Copilot</strong></div>
+              </div>
+            </div>
+            <p class="grounded-knowledge">AI answers grounded in governed, approved knowledge.</p>
+          </div>
+        </section>
+
+        <section class="knowledge-lane operations-lane" aria-labelledby="operations-lane-title">
+          <header><span>Lane B</span><h3 id="operations-lane-title">GTM / operational truth</h3></header>
+          <div class="lane-body">
+            <div class="truth-source combined-source"><strong>Salesforce + version-controlled definitions</strong><small>verified against the live org</small></div>
+            <div class="simple-arrow" aria-hidden="true"></div>
+            <div class="catalog-node"><strong>Generated GTM catalog / metric definitions</strong><small>232 fields · 8 objects</small></div>
+            <div class="simple-arrow" aria-hidden="true"></div>
+            <div class="ai-context-node"><span>AI context layer</span><strong>definitions · field meaning · business rules · guardrails</strong></div>
+            <div class="simple-arrow" aria-hidden="true"></div>
+            <div class="operational-outputs">
+              <div><strong>Executive intelligence</strong></div>
+              <div><strong>AI / MCP interactions</strong><em class="status-label">In progress</em></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="trust-rail"><span>Trust layer</span><strong>versioning · provenance · permissions · validation · audience boundaries</strong></div>
+        <div class="evidence-rail"><span>237 product-doc pages</span><span>19 metric definitions</span><span>9 process topics</span><span>weekly executive reporting</span></div>
+      </div>
+      <p class="trusted-context-line">Trusted context as infrastructure.</p>
+    </section>
+
+    <section class="stack-strip page-width" aria-labelledby="stack-strip-title">
+      <h2 id="stack-strip-title">Building across the GTM stack</h2>
+      <div class="stack-grid">
+        <div><strong>AI / agents</strong><span>Claude Code · Anthropic API · Rovo · AI research / enrichment</span></div>
+        <div><strong>CRM / data</strong><span>Salesforce · HubSpot · Tableau</span></div>
+        <div><strong>GTM orchestration</strong><span>Floqer · LeanData · n8n · FoundryOps / g-gremlin</span></div>
+        <div><strong>Engagement</strong><span>Outreach · Lemlist · Orum · Slack</span></div>
+        <div><strong>Programmatic operations</strong><span>Salesforce CLI · HubSpot CLI · Python · APIs · YAML / config-driven workflows</span></div>
+      </div>
+    </section>
+
+    <section class="more-proof full-bleed" aria-labelledby="more-proof-title">
+      <div class="page-width">
+        <span class="eyebrow">More proof</span>
+        <h2 id="more-proof-title">Continue exploring Molly's work.</h2>
+        <nav aria-label="More proof links">
+          <a href="../">All proof</a>
+          <a href="../../">← Back to Molly Young</a>
+          <a href="../../molly-young-v1.0.0.pdf">Resume</a>
+        </nav>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
