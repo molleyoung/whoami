@@ -36,7 +36,7 @@
 
       <div class="role-line"><strong>My role</strong><span>· architecture · operating logic · workflows · systems</span></div>
 
-      <div class="signal-map" role="img" aria-label="Website activity, form fills, intent, SLED procurement, and hiring activity converge into one qualified account and durable Salesforce signal history. The account branches into relevant people, which are assigned an owner and priority. Automated and rep paths operate in parallel, reconnect at a reply or conversation, return to the owning rep, and exit to meeting and pipeline. Outcomes feed future prioritization.">
+      <div class="signal-map" role="img" aria-label="Website activity, form fills, intent, SLED procurement, and hiring activity converge into one qualified account and durable Salesforce signal history. The account branches into relevant people, which are assigned an owner and priority. Automated and rep paths operate in parallel. The automated path reaches a detected reply and stops automation; the rep path reaches a live connect or other response. Both paths then converge into a conversation with the same rep and preserved context before exiting to a booked meeting and pipeline. Outcomes feed future prioritization.">
         <div class="signal-stage input-stage">
           <span class="map-label">Many inputs</span>
           <ul class="signal-inputs">
@@ -72,18 +72,25 @@
         <div class="signal-stage activation-stage">
           <span class="map-label">Activate in parallel</span>
           <div class="activation-paths">
-            <div class="map-node"><span>Automated</span><strong>Email + LinkedIn</strong><small>Lemlist</small></div>
-            <div class="map-node"><span>Rep</span><strong>Call · email · direct outreach</strong><small>Outreach · Orum · Slack · Salesforce</small></div>
+            <div class="activation-branch">
+              <div class="map-node"><span>Automated</span><strong>Email + LinkedIn</strong><small>Lemlist</small></div>
+              <div class="branch-down" aria-hidden="true">↓</div>
+              <div class="response-node"><strong>Reply detected</strong><small>automation stops</small></div>
+            </div>
+            <div class="activation-branch">
+              <div class="map-node"><span>Rep</span><strong>Call · email · direct outreach</strong><small>Outreach · Orum · Slack · Salesforce</small></div>
+              <div class="branch-down" aria-hidden="true">↓</div>
+              <div class="response-node"><strong>Connect / response</strong></div>
+            </div>
           </div>
           <p>automation + human execution</p>
         </div>
 
         <div class="signal-stage outcome-stage">
-          <span class="map-label">Conversation</span>
-          <div class="map-node"><strong>Reply / conversation</strong></div>
-          <div class="vertical-link" aria-hidden="true"></div>
-          <div class="map-node"><strong>Owning rep</strong></div>
-          <div class="pipeline-exit"><span>Meeting</span><i aria-hidden="true">→</i><strong>Pipeline</strong></div>
+          <span class="map-label">Conversation → pipeline</span>
+          <div class="map-node"><strong>Rep conversation</strong><small>same owner · context preserved</small></div>
+          <div class="outcome-down" aria-hidden="true">↓</div>
+          <div class="pipeline-exit"><span>Meeting booked</span><i aria-hidden="true">→</i><strong>Pipeline</strong></div>
         </div>
 
         <div class="feedback-rail">
