@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An interactive lifecycle architecture connecting acquisition source, contact progression, meeting outcomes, pipeline acceptance, forecasting, and post-sale handoff." />
+<title>New Business Lifecycle Architecture | Molly Young</title>
+<link rel="stylesheet" href="new-business-lifecycle.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="mark" href="../../" aria-label="Molly Young home">M</a>
+  <nav aria-label="Portfolio navigation">
+    <a href="../../">Overview</a>
+    <a href="../" aria-current="page">Proof</a>
+    <a href="../../molly-young-v1.0.0.pdf">Resume</a>
+    <a href="mailto:mollyeyoung@gmail.com">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="proof-hero page-width" aria-labelledby="page-title">
+    <span class="portfolio-eyebrow">Lifecycle Architecture</span>
+    <h1 id="page-title">From first signal to accepted pipeline</h1>
+    <p class="proof-intro">A working model for connecting acquisition source, contact progression, meeting outcomes, opportunity acceptance, forecasting, and post-sale handoff.</p>
+    <p class="proof-context">A lifecycle map is only useful when it defines what each state means, what causes a record to move, and which object owns the truth. This example separates contact progression from meeting disposition and pipeline acceptance, so activity does not automatically become forecastable pipeline.</p>
+    <p class="anonymization-note">Representative example. Company-specific terminology, thresholds, and implementation details have been anonymized and modified.</p>
+  </section>
+
+  <section class="interactive-shell" aria-labelledby="interactive-instruction">
+    <p class="interactive-instruction page-width" id="interactive-instruction">Select a node to inspect its definition, activities, and exit criteria, or use the playback controls to walk through the lifecycle.</p>
+<style>
+  :root{
+    --i1:#EAFFF2; --i2:#C8F7DA; --i3:#9DE7BA; --i4:#7CFFB2; --i5:#55DB92;
+    --i6:#2EA86D; --i7:#1C6847; --i8:#103A2A; --navy:#0C261D;
+    --won:#7CFFB2; --lost:#FF7766; --omit:#8A90A8;
+    --bg:#0A0B0F; --board:#0C0D12; --node:#14151C; --nodeb:#282A38;
+    --tx:#EEF0FA; --tx2:#A6ADCE; --tx3:#6B7192; --line:#20222E;
+    --contact:#8AB4FF; --opp:#7CFFB2; --src:#FFCC66; --oppfill:rgba(124,255,178,.10);
+    --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:var(--sans); background:var(--bg); color:var(--tx2); -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.5}
+  .page{max-width:1280px; margin:0 auto; padding:26px 22px 44px}
+  @media(max-width:640px){.page{padding:16px 12px 32px}}
+
+  .board{position:relative; border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    background:radial-gradient(1100px 460px at 30% -8%, rgba(124,255,178,.16), transparent 60%),
+      radial-gradient(900px 500px at 100% 120%, rgba(30,42,107,.30), transparent 60%), var(--board);
+    box-shadow:0 24px 70px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.03)}
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    padding:16px 20px; border-bottom:1px solid var(--line); position:relative; z-index:5;
+    background:linear-gradient(180deg, rgba(12,13,18,.9), rgba(12,13,18,.4))}
+  .brand{display:flex; align-items:center; gap:12px}
+  .glyph{width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg,var(--i4),var(--i7));
+    display:flex; align-items:center; justify-content:center; box-shadow:0 0 18px rgba(124,255,178,.5)}
+  .glyph::after{content:""; width:11px; height:11px; border:2px solid #fff; border-radius:50%; border-right-color:transparent; transform:rotate(45deg)}
+  .brand b{color:var(--tx); font-size:15px; font-weight:650; letter-spacing:-.01em}
+  .brand .div{color:var(--tx3); font-size:13px; padding-left:12px; border-left:1px solid var(--line); margin-left:2px}
+  .tag{font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--i3);
+    border:1px solid rgba(124,255,178,.3); border-radius:5px; padding:5px 9px}
+  .stats{font-family:var(--mono); font-size:11.5px; color:var(--tx3); display:flex; gap:14px; flex-wrap:wrap}
+  .stats b{color:var(--tx); font-weight:600}
+
+  .stage{position:relative; display:flex; min-height:560px}
+  @media(max-width:820px){.stage{flex-direction:column; min-height:0}}
+  .viewport{position:relative; flex:1; overflow:auto; min-width:0;
+    background-image:radial-gradient(rgba(124,255,178,.10) 1px, transparent 1px); background-size:26px 26px}
+  .canvas{position:relative; transform-origin:0 0}
+  .conn{position:absolute; top:0; left:0; overflow:visible; pointer-events:none}
+  .e-main{stroke:rgba(124,255,178,.5); stroke-width:1.6; fill:none}
+  .e-thin{stroke:rgba(124,255,178,.28); stroke-width:1.2; fill:none}
+  .e-seam{stroke:rgba(157,231,186,.75); stroke-width:1.6; fill:none}
+  .e-out{stroke:rgba(224,90,72,.55); stroke-width:1.5; fill:none; stroke-dasharray:5 4}
+  .e-off{stroke:rgba(138,144,168,.42); stroke-width:1.3; fill:none; stroke-dasharray:4 4}
+  .e-lab{fill:var(--tx3); font-family:var(--mono); font-size:10px; text-anchor:middle; letter-spacing:.04em}
+  .e-lab-out{fill:rgba(224,120,110,.9); font-family:var(--mono); font-size:10px; text-anchor:middle}
+  .e-lab-adv{fill:#9DE7BA; font-family:var(--mono); font-size:10px; text-anchor:middle; letter-spacing:.03em}
+  .e-lab-off{fill:var(--tx3); font-family:var(--mono); font-size:9.5px; text-anchor:start; letter-spacing:.06em}
+
+  .cap{position:absolute; font-family:var(--mono); color:var(--tx3); z-index:1; pointer-events:none}
+  .cap.zl-c,.cap.zl-contact,.cap.zl-mtg,.cap.zl-opp,.cap.zl-exit{font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; display:flex; align-items:center; gap:8px}
+  .cap.zl-contact::before,.cap.zl-opp::before,.cap.zl-c::before,.cap.zl-mtg::before,.cap.zl-exit::before{content:""; width:8px; height:8px; border-radius:50%}
+  .cap.zl-c::before{background:var(--src); box-shadow:0 0 10px var(--src)}
+  .cap.zl-contact::before{background:var(--contact); box-shadow:0 0 10px var(--contact)}
+  .cap.zl-mtg::before{background:var(--i3); box-shadow:0 0 10px var(--i3)}
+  .cap.zl-opp::before{background:var(--opp); box-shadow:0 0 10px var(--opp)}
+  .cap.zl-exit::before{background:var(--omit)}
+  .cap.many{font-size:10px; color:var(--tx3); max-width:150px; text-align:center; letter-spacing:.02em; line-height:1.35}
+  .cap.iqm{font-size:10px; color:var(--i3); max-width:260px; line-height:1.4; letter-spacing:.02em}
+  .cap.iqm-pill{z-index:4; font-family:var(--mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--i2);
+    background:rgba(20,22,32,.96); border:1px dashed rgba(157,231,186,.7); border-radius:6px; padding:4px 9px;
+    display:flex; align-items:center; gap:6px; pointer-events:auto}
+  .cap.iqm-pill::before{content:""; width:6px; height:6px; border-radius:2px; background:var(--i3); box-shadow:0 0 8px var(--i3)}
+  .cap.iqm-pill::after{content:"\203A"; font-size:12px; line-height:1; opacity:.65}
+  .js .cap.iqm-pill{cursor:pointer; transition:border-color .15s ease, box-shadow .15s ease, color .15s ease}
+  .js .cap.iqm-pill:hover{border-color:var(--i3); color:#fff; box-shadow:0 0 16px -2px rgba(157,231,186,.75)}
+  .cap.iqm-pill:focus-visible{outline:2px solid var(--i4); outline-offset:2px}
+
+  /* Disposition overlay */
+  .overlay{position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center; padding:20px}
+  .overlay[hidden]{display:none}
+  .ov-backdrop{position:absolute; inset:0; background:rgba(6,7,11,.74); backdrop-filter:blur(3px)}
+  .ov-card{position:relative; z-index:1; width:min(560px,100%); max-height:86vh; overflow:auto;
+    background:linear-gradient(180deg,#15161f,#0e0f16); border:1px solid var(--line); border-radius:16px;
+    padding:26px 28px 28px; box-shadow:0 34px 100px -22px rgba(0,0,0,.92); animation:ovin .2s ease}
+  @keyframes ovin{from{opacity:0; transform:translateY(10px) scale(.99)}to{opacity:1; transform:none}}
+  @media(prefers-reduced-motion:reduce){.ov-card{animation:none}}
+  .ov-x{position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:8px; border:1px solid var(--line);
+    background:#171922; color:var(--tx2); cursor:pointer; font-size:16px; line-height:1}
+  .ov-x:hover{color:var(--tx); border-color:var(--i6)}
+  .ov-x:focus-visible{outline:2px solid var(--i4); outline-offset:2px}
+  .ov-eyebrow{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--i3); margin:0 0 8px}
+  .ov-h{color:var(--tx); font-size:20px; font-weight:660; margin:0 0 8px; letter-spacing:-.01em}
+  .ov-lead{font-size:13px; color:var(--tx3); margin:0 0 16px; line-height:1.55}
+  .ov-facts{display:flex; gap:7px; flex-wrap:wrap; margin:0 0 20px}
+  .ov-facts span{font-family:var(--mono); font-size:11px; color:var(--i2); background:rgba(124,255,178,.12); border:1px solid rgba(124,255,178,.25); border-radius:6px; padding:4px 9px}
+  .ov-flow{display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:14px}
+  .ov-sub{font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--tx3); margin:20px 0 10px}
+  .ov-outcome[hidden]{display:none}
+  .ov-outcome{margin-top:16px; padding-top:16px; border-top:1px solid var(--line)}
+  .ov-outcome .ov-sub{margin-top:0}
+  .ov-outs{display:grid; gap:11px}
+  .ov-orow{display:flex; gap:12px; align-items:baseline; font-size:13px; color:var(--tx2); line-height:1.5}
+  .ov-orow span:last-child{flex:1}
+  .ov-otag{font-family:var(--mono); font-size:11px; font-weight:600; padding:4px 10px; border-radius:6px; white-space:nowrap; min-width:104px; text-align:center}
+  .t-accept{color:#8FE0C2; background:rgba(57,192,138,.12); border:1px solid rgba(57,192,138,.32)}
+  .t-hold{color:var(--tx2); background:rgba(124,255,178,.08); border:1px solid var(--line)}
+  .t-disq{color:#F0A79C; background:rgba(224,90,72,.12); border:1px solid rgba(224,90,72,.32)}
+
+  .gnode{position:absolute; width:162px; min-height:56px; text-align:left; cursor:pointer;
+    background:var(--node); border:1px solid var(--nodeb); border-radius:10px; padding:9px 13px;
+    display:flex; flex-direction:column; justify-content:center; gap:3px; font:inherit; color:var(--tx);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; z-index:2}
+  .gnode .g-micro{font-family:var(--mono); font-size:9px; letter-spacing:.11em; color:#C8F7DA}
+  .gnode .g-name{font-size:14px; font-weight:600; letter-spacing:-.01em; line-height:1.18}
+  .sys-source{border-color:rgba(255,204,102,.45)}
+  .sys-source .g-name{color:#EAF6F5}
+  .sys-contact{border-color:rgba(138,180,255,.42)}
+  .sys-meeting{border-style:dashed; border-color:rgba(157,231,186,.7); background:linear-gradient(180deg,rgba(157,231,186,.09),var(--node))}
+  .sys-meeting .g-name{color:#EAFFF2}
+  .js .sys-meeting.active{box-shadow:0 0 0 1px var(--i3), 0 0 26px -2px rgba(157,231,186,.65)}
+  .sys-opp{border-color:rgba(124,255,178,.55); background:linear-gradient(180deg,var(--oppfill),var(--node))}
+  .sys-off{border-style:dashed; border-color:rgba(138,144,168,.5); background:#101117}
+  .sys-off .g-name{color:var(--tx2)}
+  .gate{border-color:rgba(157,231,186,.85); background:linear-gradient(180deg,rgba(124,255,178,.26),var(--node));
+    box-shadow:0 0 0 1px rgba(124,255,178,.25), 0 10px 30px -12px rgba(124,255,178,.6)}
+  .stacked{box-shadow:0 0 0 0 transparent}
+  .stacked::before,.stacked::after{content:""; position:absolute; inset:0; border:1px solid rgba(124,255,178,.35);
+    border-radius:10px; background:var(--node); z-index:-1}
+  .stacked::before{transform:translate(6px,-6px)}
+  .stacked::after{transform:translate(12px,-12px); opacity:.55}
+  .term-won{border-color:rgba(57,192,138,.6)!important}
+  .term-lost{border-color:rgba(224,90,72,.6)!important}
+
+  .js .gnode:hover{transform:translateY(-1px); border-color:var(--i3); box-shadow:0 8px 24px -8px rgba(124,255,178,.5)}
+  .js .gnode.active{border-color:var(--i3); box-shadow:0 0 0 1px var(--i4), 0 0 30px -2px rgba(124,255,178,.7); transform:translateY(-1px)}
+  .js .sys-source.active{box-shadow:0 0 0 1px var(--src), 0 0 26px -2px rgba(255,204,102,.55)}
+  .js .term-won.active{box-shadow:0 0 0 1px var(--won), 0 0 30px -2px rgba(57,192,138,.7)}
+  .js .term-lost.active{box-shadow:0 0 0 1px var(--lost), 0 0 30px -2px rgba(224,90,72,.7)}
+  .gnode:focus-visible{outline:2px solid var(--i4); outline-offset:2px}
+
+  .zoom{position:absolute; left:18px; bottom:18px; z-index:6; display:none; gap:6px}
+  .js .zoom{display:flex}
+  .zbtn{font-family:var(--sans); font-size:13px; color:var(--tx2); background:rgba(14,15,21,.82); backdrop-filter:blur(10px);
+    border:1px solid var(--line); border-radius:9px; padding:8px 12px; cursor:pointer; min-width:38px}
+  .zbtn:hover{color:var(--tx); border-color:var(--i6)}
+  .zbtn:focus-visible{outline:2px solid var(--i4); outline-offset:2px}
+
+  .player{position:absolute; left:50%; transform:translateX(-50%); bottom:18px; z-index:7; display:none;
+    align-items:center; gap:12px; padding:8px 8px 8px 12px; background:rgba(14,15,21,.9); backdrop-filter:blur(12px);
+    border:1px solid var(--line); border-radius:14px; box-shadow:0 20px 50px -18px rgba(0,0,0,.85)}
+  .js .player{display:flex}
+  .pbtn{width:38px; height:38px; border-radius:10px; border:1px solid var(--line); background:#171922; color:var(--tx);
+    cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:13px}
+  .pbtn:hover{border-color:var(--i6)}
+  .pbtn:focus-visible{outline:2px solid var(--i4); outline-offset:2px}
+  .pbtn.play{background:linear-gradient(135deg,var(--i5),var(--i7)); border-color:transparent; width:44px; height:44px; box-shadow:0 0 22px -2px rgba(124,255,178,.8); font-size:15px}
+  .pmeta{padding:0 10px 0 4px; min-width:150px}
+  .pmeta .pn{color:var(--tx); font-size:15px; font-weight:650; letter-spacing:-.01em; line-height:1.1}
+  .pmeta .ps{font-family:var(--mono); font-size:10.5px; color:var(--tx3); letter-spacing:.06em; margin-top:2px}
+
+  .detail-x{position:absolute; top:12px; right:14px; z-index:8; width:28px; height:28px; border-radius:8px;
+    border:1px solid var(--line); background:rgba(23,25,34,.92); color:var(--tx2); cursor:pointer; font-size:16px; line-height:1;
+    display:none; align-items:center; justify-content:center}
+  .js .detail-x{display:flex}
+  .detail-x:hover{color:var(--tx); border-color:var(--i6)}
+  .detail-show{position:absolute; top:12px; right:14px; z-index:8; display:none; align-items:center;
+    border:1px solid var(--line); background:rgba(23,25,34,.92); color:var(--tx2); cursor:pointer; font-family:var(--mono);
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase; border-radius:8px; padding:7px 11px}
+  .stage.detail-hidden .detail{display:none}
+  .stage.detail-hidden .detail-x{display:none}
+  .stage.detail-hidden .detail-show{display:flex}
+  .detail-show:hover{color:var(--tx); border-color:var(--i6)}
+  .detail-x:focus-visible,.detail-show:focus-visible{outline:2px solid var(--i4); outline-offset:2px}
+  @media(max-width:820px){.detail-x,.stage.detail-hidden .detail-show{display:none!important}}
+  .detail{display:none; width:352px; flex:none; border-left:1px solid var(--line);
+    background:linear-gradient(180deg, rgba(16,17,24,.7), rgba(10,11,15,.9)); overflow:auto; padding:22px 22px 28px}
+  .js .detail{display:block}
+  @media(max-width:820px){.detail{width:auto; border-left:0; border-top:1px solid var(--line)}}
+  .detail .scard{border:0; padding:0; background:none; animation:fade .28s ease}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+  @media(prefers-reduced-motion:reduce){.detail .scard{animation:none}}
+
+  .scard .d-eyebrow{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--i3); margin:0 0 10px}
+  .sys-source .d-eyebrow{color:var(--src)} .sys-opp .d-eyebrow{color:#C8F7DA} .sys-off .d-eyebrow{color:var(--omit)}
+  .scard[data-term="won"] .d-eyebrow{color:var(--won)} .scard[data-term="lost"] .d-eyebrow{color:var(--lost)}
+  .scard .d-name{color:var(--tx); font-size:24px; font-weight:680; letter-spacing:-.02em; margin:0; line-height:1.12}
+  .scard .d-mile{font-size:14.5px; color:var(--tx2); margin:12px 0 0; line-height:1.55}
+  .d-meta{display:grid; grid-template-columns:auto auto; gap:14px 26px; align-items:end; margin-top:20px}
+  .d-prob,.d-fc{display:flex; flex-direction:column; gap:4px} .d-fc{align-items:flex-start}
+  .d-pn{font-size:30px; color:var(--tx); font-weight:600; line-height:1; letter-spacing:-.02em}
+  .d-pn em{font-style:normal; font-size:16px; color:var(--tx3); margin-left:1px}
+  .fc{font-size:13px; font-weight:650}
+  .fc-pipeline{color:var(--i3)} .fc-best{color:#C8F7DA} .fc-most{color:#8EA0FF} .fc-commit{color:#C8F7DA} .fc-omitted{color:var(--omit)} .fc-closed{color:var(--won)}
+  .d-l{font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--tx3)}
+  .d-meter{grid-column:1/-1; height:3px; background:var(--line); border-radius:3px; overflow:hidden}
+  .d-fill{display:block; height:100%; border-radius:3px; background:linear-gradient(90deg,var(--i5),var(--i3))}
+  .d-fill.fill-won{background:var(--won)} .d-fill.fill-lost{background:var(--lost)} .d-fill.fill-omitted{background:var(--omit)}
+  .d-facts{display:flex; gap:7px; flex-wrap:wrap; margin-top:18px}
+  .d-facts span{font-family:var(--mono); font-size:11px; color:var(--i2); background:rgba(124,255,178,.12); border:1px solid rgba(124,255,178,.25); border-radius:6px; padding:4px 9px}
+  .d-block{margin-top:22px}
+  .d-block h4{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--i3); margin:0 0 11px; padding-bottom:8px; border-bottom:1px solid var(--line)}
+  .sys-off .d-block h4{color:var(--omit)}
+  .d-block ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+  .d-block li{position:relative; padding-left:16px; font-size:13.5px; color:var(--tx2); line-height:1.5}
+  .d-block li::before{content:""; position:absolute; left:1px; top:8px; width:5px; height:5px; border-radius:50%; background:var(--i4)}
+  .scard[data-term="won"] .d-block li::before{background:var(--won)} .scard[data-term="lost"] .d-block li::before{background:var(--lost)} .sys-off .d-block li::before{background:var(--omit)}
+  .d-note{margin-top:20px; font-size:12.5px; color:var(--tx3); padding-left:13px; border-left:2px solid var(--i6); line-height:1.55}
+  .d-note.d-gate{color:var(--tx2); border-left-color:#E9A23B; background:rgba(233,162,59,.07); padding:12px 14px; border-radius:0 9px 9px 0}
+  .d-note.d-gate b{color:var(--tx)}
+  .d-note.d-gate .gate-i{font-size:14px; margin-right:2px}
+
+  .allstages{margin-top:20px; display:grid; gap:14px}
+  .js .allstages{display:none}
+  .allstages .scard{background:var(--board); border:1px solid var(--line); border-radius:14px; padding:20px 22px}
+  .allstages-h{font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--tx3); margin:26px 0 4px}
+  .staticnote{font-family:var(--mono); font-size:11px; color:var(--tx3); margin:14px 2px 0; letter-spacing:.02em}
+  .js .staticnote{display:none}
+
+  .ref{margin-top:26px; display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media(max-width:760px){.ref{grid-template-columns:1fr}}
+  .rcard{border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:var(--board)}
+  .rcard h3{color:var(--tx); font-size:15px; font-weight:640; margin:0 0 3px}
+  .rcard .rl{font-size:12.5px; color:var(--tx3); margin:0 0 16px}
+  .iqm-track{grid-column:1 / -1}
+  .rec-flow{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:2px 0 20px}
+  .rec{display:flex; flex-direction:column; gap:3px; border:1px solid var(--line); border-radius:10px; padding:10px 15px; background:var(--node); min-width:118px}
+  .rec b{color:var(--tx); font-size:13.5px; font-weight:650}
+  .rec span{font-family:var(--mono); font-size:9.5px; color:var(--tx3); letter-spacing:.05em}
+  .rec-contact{border-color:rgba(138,180,255,.5)}
+  .rec-mtg{border-style:dashed; border-color:rgba(157,231,186,.65)}
+  .rec-opp{border-color:rgba(124,255,178,.6); background:linear-gradient(180deg,var(--oppfill),var(--node))}
+  .rec-ar{font-family:var(--mono); font-size:11px; color:var(--i4); letter-spacing:.04em}
+  .rec-facts{display:grid; grid-template-columns:1fr 1fr; gap:16px 32px}
+  @media(max-width:760px){.rec-facts{grid-template-columns:1fr}}
+  .rec-facts>div{font-size:12.5px; color:var(--tx2); line-height:1.5}
+  .rf-k{display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--i3); margin-bottom:5px}
+  .fclist{display:grid; gap:10px}
+  .fcrow{display:grid; grid-template-columns:92px 1fr; gap:12px; align-items:baseline; font-size:13px; color:var(--tx2)}
+  .disp{display:flex; flex-direction:column; gap:12px}
+  .dflow{display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+  .dflow .sc{font-size:13.5px; font-weight:650; color:var(--tx)} .dflow .ar{color:var(--i4); font-family:var(--mono)}
+  .outs{display:flex; gap:7px; flex-wrap:wrap}
+  .out{font-family:inherit; font-size:12px; color:var(--tx2); border:1px solid var(--line); border-radius:999px; padding:6px 12px; background:transparent}
+  .js .out{cursor:pointer; transition:border-color .15s ease, background .15s ease, color .15s ease}
+  .js .out:hover{border-color:var(--i5); color:var(--tx)}
+  .out:focus-visible{outline:2px solid var(--i4); outline-offset:2px}
+  .out.sel{border-color:var(--i4); color:var(--tx); background:rgba(124,255,178,.18)}
+  .out.adv.sel{border-color:var(--won); color:#D6F5E8; background:rgba(57,192,138,.16)}
+  .dn{font-size:12.5px; color:var(--tx2); line-height:1.55; margin:0; min-height:2.6em}
+  .dn .dn-tag{font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-right:8px}
+  .dn .t-adv{color:var(--won)} .dn .t-close{color:var(--omit)} .dn .t-sched{color:var(--i3)}
+
+  footer{margin-top:24px; padding-top:18px; border-top:1px solid var(--line); font-size:12px; color:var(--tx3);
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center}
+  footer b{color:var(--i3); font-weight:650}
+  .key{display:flex; gap:14px; flex-wrap:wrap}
+  .key .k{display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:10.5px; letter-spacing:.04em}
+  .key .sw{width:10px; height:10px; border-radius:3px; display:inline-block}
+
+  .postit{position:absolute; width:320px; padding:13px 15px 14px; z-index:5; pointer-events:none;
+    background:linear-gradient(180deg, rgba(20,21,28,.97), rgba(15,16,22,.97));
+    border:1px solid var(--nodeb); border-left:2px solid rgba(224,90,72,.85);
+    border-radius:11px; color:var(--tx2);
+    box-shadow:0 18px 46px -24px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.04)}
+  .postit .pi-head{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+    font-weight:600; color:#E28C7E; margin:0 0 7px; display:flex; align-items:center; gap:8px}
+  .postit .pi-head::before{content:""; width:8px; height:8px; border-radius:50%;
+    background:var(--lost); box-shadow:0 0 10px var(--lost)}
+  .postit .pi-body{font-size:12.5px; line-height:1.5; color:var(--tx2); margin:0}
+  .postit .pi-body b{color:var(--tx); font-weight:600}
+</style>
+<script>document.documentElement.className="js";if(document.body){document.body.className="js";}</script>
+<div class="page">
+  <div class="board">
+    <div class="topbar">
+      <div class="brand"><span class="glyph" aria-hidden="true"></span><b>New Business Lifecycle Architecture</b>
+        <span class="div">Contact Status to Opportunity Stage</span></div>
+      <span class="tag">Portfolio Example</span>
+    </div>
+    <div class="stage">
+      <div class="viewport" id="viewport">
+        <div class="canvas" id="canvas" style="width:3050px; height:430px">
+          <span class="cap zl-c" style="left:24px; top:30px">New leads by source</span>
+<span class="cap zl-contact" style="left:258px; top:116px">Contact Status</span>
+<span class="cap zl-opp" style="left:1588px; top:110px">Opportunity Stage</span>
+<span class="cap many" style="left:1068px; top:300px">Multiple contacts can map to one opportunity</span>
+<span class="cap iqm" style="left:1275px; top:392px">Stage 0 opens when a qualification meeting is scheduled; its outcome routes the opportunity</span>
+<button type="button" id="iqm-btn" class="cap iqm-pill" style="left:1272px; top:150px">Qualification meeting</button>
+          <svg class="conn" width="3050" height="430" viewBox="0 0 3050 430" aria-hidden="true">
+            <defs>
+              <marker id="arw" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(124,255,178,.75)"/></marker>
+              <marker id="arwg" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(138,144,168,.6)"/></marker>
+              <marker id="arwr" markerWidth="7" markerHeight="7" refX="5.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(224,90,72,.7)"/></marker>
+            </defs>
+            <path class="e-main" d="M186,80 L258,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M186,166 L258,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M186,252 L258,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M420,166 L468,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M630,166 L678,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M840,166 L888,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M1050,166 L1098,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M1260,166 L1342,166" marker-end="url(#arw)"/>
+            <path class="e-thin" d="M1260,152 L1342,166"/>
+            <path class="e-thin" d="M1260,140 L1342,166"/>
+            <path class="e-main" d="M1271,96 L1271,180 L1342,180" marker-end="url(#arw)"/>
+            <path class="e-main" d="M1504,166 L1588,166" marker-end="url(#arw)"/>
+            <path class="e-out" d="M1423,194 L1423,312" marker-end="url(#arwr)"/>
+            <path class="e-seam" d="M1397,138 C1377,96 1469,96 1449,138" marker-end="url(#arw)"/>
+            <path class="e-main" d="M1750,166 L1798,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M1960,166 L2008,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M2170,166 L2218,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M2380,166 L2428,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M2590,166 L2638,166" marker-end="url(#arw)"/>
+            <path class="e-main" d="M2800,166 L2848,166" marker-end="url(#arw)"/>
+            <path class="e-out" d="M2719,194 L2719,312" marker-end="url(#arwr)"/>
+            <path class="e-off" d="M339,250 L1179,250"/>
+            <path class="e-off" d="M339,194 L339,250"/>
+            <path class="e-off" d="M549,194 L549,250"/>
+            <path class="e-off" d="M759,194 L759,250"/>
+            <path class="e-off" d="M969,194 L969,250"/>
+            <path class="e-off" d="M1179,194 L1179,250"/>
+            <path class="e-off" d="M339,250 L339,312" marker-end="url(#arwg)"/>
+            <path class="e-off" d="M549,250 L549,312" marker-end="url(#arwg)"/>
+            <path class="e-off" d="M339,368 C299,398 228,206 258,178" marker-end="url(#arwg)"/>
+            <text class="e-lab-adv" x="1546" y="130">Accept to pipeline</text>
+            <text class="e-lab-out" x="1379" y="256">Disqualify</text>
+            <text class="e-lab" x="1423" y="92">Hold</text>
+            <text class="e-lab-out" x="2727" y="256">Lost</text>
+            <text class="e-lab-off" x="435" y="244">Off-ramp from any Contact Status</text>
+          </svg>
+          <button class="gnode sys-source" data-target="inbound" style="left:24px;top:52px"><span class="g-name">Inbound</span></button>
+<button class="gnode sys-source" data-target="outbound" style="left:24px;top:138px"><span class="g-name">Outbound</span></button>
+<button class="gnode sys-source" data-target="partner" style="left:24px;top:224px"><span class="g-name">Partner</span></button>
+<button class="gnode sys-source" data-target="dealreg" style="left:1190px;top:40px"><span class="g-name">Partner Registration</span></button>
+<button class="gnode sys-contact" data-target="new" style="left:258px;top:138px"><span class="g-name">New</span></button>
+<button class="gnode sys-contact" data-target="mql" style="left:468px;top:138px"><span class="g-name">Sales Ready</span></button>
+<button class="gnode sys-contact" data-target="sal" style="left:678px;top:138px"><span class="g-name">Working</span></button>
+<button class="gnode sys-contact" data-target="engaged" style="left:888px;top:138px"><span class="g-name">Engaged</span></button>
+<button class="gnode sys-contact stacked" data-target="sql" style="left:1098px;top:138px"><span class="g-name">Meeting Scheduled</span></button>
+<button class="gnode sys-opp gate" data-target="o0" style="left:1342px;top:138px"><span class="g-micro">STAGE 0</span><span class="g-name">Qualification Review</span></button>
+<button class="gnode sys-opp" data-target="o1" style="left:1588px;top:138px"><span class="g-micro">STAGE 1 &middot; 10%</span><span class="g-name">Problem Discovery</span></button>
+<button class="gnode sys-opp" data-target="o2" style="left:1798px;top:138px"><span class="g-micro">STAGE 2 &middot; 25%</span><span class="g-name">Requirements Alignment</span></button>
+<button class="gnode sys-opp" data-target="o3" style="left:2008px;top:138px"><span class="g-micro">STAGE 3 &middot; 40%</span><span class="g-name">Solution Evaluation</span></button>
+<button class="gnode sys-opp" data-target="o4" style="left:2218px;top:138px"><span class="g-micro">STAGE 4 &middot; 55%</span><span class="g-name">Business Case</span></button>
+<button class="gnode sys-opp" data-target="o5" style="left:2428px;top:138px"><span class="g-micro">STAGE 5 &middot; 75%</span><span class="g-name">Commercial Review</span></button>
+<button class="gnode sys-opp" data-target="o6" style="left:2638px;top:138px"><span class="g-micro">STAGE 6 &middot; 90%</span><span class="g-name">Final Approval</span></button>
+<button class="gnode sys-opp term-won" data-target="won" style="left:2848px;top:138px"><span class="g-micro">STAGE 7 &middot; 100%</span><span class="g-name">Closed Won</span></button>
+<button class="gnode sys-opp term-lost" data-target="lost" style="left:2638px;top:312px"><span class="g-micro">STAGE 8 &middot; 0%</span><span class="g-name">Closed Lost</span></button>
+<button class="gnode sys-opp term-unq" data-target="unq" style="left:1342px;top:312px"><span class="g-micro">STAGE 9 &middot; UNQUALIFIED</span><span class="g-name">Unqualified</span></button>
+<button class="gnode sys-off" data-target="nurture" style="left:258px;top:312px"><span class="g-name">Nurture</span></button>
+<button class="gnode sys-off term-unq" data-target="archived" style="left:468px;top:312px"><span class="g-name">Archived</span></button>
+<div class="postit" style="left:1750px; top:16px">
+  <p class="pi-head">Illustrative architecture</p>
+  <p class="pi-body">Terminology, thresholds, and operating details have been <b>anonymized and modified</b> for this portfolio example.</p>
+</div>
+        </div>
+      </div>
+      <aside class="detail" id="detail" aria-live="polite"></aside>
+      <button type="button" class="detail-x" id="detail-x" aria-label="Hide details">&times;</button>
+      <button type="button" class="detail-show" id="detail-show" aria-label="Show details" hidden>&#8249;&nbsp;Details</button>
+      <div class="zoom"><button class="zbtn" id="zfit">Fit</button><button class="zbtn" id="zout">&#8722;</button><button class="zbtn" id="zin">&#43;</button></div>
+      <div class="player">
+        <button class="pbtn" id="prev" aria-label="Previous">&#9664;</button>
+        <button class="pbtn play" id="play" aria-label="Play">&#9654;</button>
+        <button class="pbtn" id="next" aria-label="Next">&#9654;&#9654;</button>
+        <div class="pmeta"><div class="pn" id="pn">Inbound</div><div class="ps" id="ps">Lead source &middot; 1 / 21</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="iqm-overlay" hidden>
+    <div class="ov-backdrop" data-close></div>
+    <div class="ov-card" role="dialog" aria-modal="true" aria-label="Qualification meeting disposition">
+      <button type="button" class="ov-x" data-close aria-label="Close">&times;</button>
+      <p class="ov-eyebrow">Meeting record &middot; qualification</p>
+      <h3 class="ov-h">Meeting disposition</h3>
+      <p class="ov-lead">Scheduling the qualification meeting creates the meeting record and a Stage 0 opportunity together. Its disposition tracks whether the meeting happened, separately from the opportunity acceptance decision.</p>
+      <div class="ov-facts"><span>Pre-pipeline</span><span>Sales-owned</span><span>Outcome required</span></div>
+      <p class="ov-sub">Select a disposition</p>
+      <div class="ov-flow" id="ov-flow">
+        <button type="button" class="out sched" data-eff="scheduled">Scheduled</button>
+        <span class="ar">-&gt;</span>
+        <div class="outs">
+          <button type="button" class="out adv" data-eff="occurred">Occurred</button>
+          <button type="button" class="out" data-eff="rescheduled">Rescheduled</button>
+          <button type="button" class="out" data-eff="canceled">Canceled</button>
+          <button type="button" class="out" data-eff="noshowed">No Showed</button>
+        </div>
+      </div>
+      <p class="dn" id="ov-result"></p>
+      <div class="ov-outcome" id="ov-outcome" hidden>
+        <p class="ov-sub">Then the qualification outcome routes Stage 0</p>
+        <div class="ov-outs">
+          <div class="ov-orow"><span class="ov-otag t-accept">Accept</span><span>The opportunity advances to Stage 1 and becomes accepted pipeline.</span></div>
+          <div class="ov-orow"><span class="ov-otag t-hold">Hold</span><span>The opportunity stays at Stage 0, pending more qualification before it can be accepted.</span></div>
+          <div class="ov-orow"><span class="ov-otag t-disq">Disqualify</span><span>The opportunity moves to Stage 9 Unqualified, the only path to Unqualified.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <p class="staticnote">Interactive map. Enable JavaScript to walk the path node by node or press play. Click the qualification-meeting marker to see the meeting disposition. Every stage is listed below.</p>
+  <p class="allstages-h">All stages</p>
+  <div class="allstages">
+<article class="scard sys-source" id="card-inbound"><p class="d-eyebrow">Lead source</p><h3 class="d-name">Inbound</h3><p class="d-mile">A lead generated through a website, content, event, or referral. It enters the same qualification framework as every other new lead.</p></article>
+<article class="scard sys-source" id="card-outbound"><p class="d-eyebrow">Lead source</p><h3 class="d-name">Outbound</h3><p class="d-mile">A lead sourced by the SDR and AE prospecting motion into target accounts and personas.</p></article>
+<article class="scard sys-source" id="card-partner"><p class="d-eyebrow">Lead source</p><h3 class="d-name">Partner</h3><p class="d-mile">A lead referred by a channel partner. Worked like any other lead until it qualifies.</p></article>
+<article class="scard sys-source" id="card-dealreg"><p class="d-eyebrow">Alternate entry path</p><h3 class="d-name">Partner Registration</h3><p class="d-mile">A qualified partner referral can enter near the qualification gate without being forced through every top-of-funnel status.</p><div class="d-block"><h4>Design principle</h4><ul><li>Preserve the original source</li><li>Apply the same acceptance criteria</li><li>Create the Stage 0 opportunity only when the meeting is scheduled</li></ul></div></article>
+<article class="scard sys-contact" id="card-new"><p class="d-eyebrow">Contact Status</p><h3 class="d-name">New</h3><p class="d-mile">A net-new contact that has not yet been evaluated or worked.</p><div class="d-block"><h4>Entry and activities</h4><ul><li>Capture source, account, and essential firmographic context</li><li>Run enrichment, validation, and ownership rules</li><li>Determine whether the record is actionable</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>Meets the sales-ready threshold</li><li>Otherwise routes to Nurture or Archived</li></ul></div></article>
+<article class="scard sys-contact" id="card-mql"><p class="d-eyebrow">Contact Status</p><h3 class="d-name">Sales Ready</h3><p class="d-mile">A source-agnostic quality gate indicating that the contact is ready for sales engagement.</p><div class="d-block"><h4>Entry and activities</h4><ul><li>Meets agreed fit and signal criteria</li><li>Routes to the appropriate owner with relevant context</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>A seller accepts and begins working the record</li><li>If not accepted, the record leaves the active queue</li></ul></div><p class="d-note">Lifecycle status should represent business meaning, not simply a technical side effect of record creation or conversion. This separates system automation from the qualification decision.</p></article>
+<article class="scard sys-contact" id="card-sal"><p class="d-eyebrow">Contact Status</p><h3 class="d-name">Working</h3><p class="d-mile">A seller has accepted ownership and is actively working the contact.</p><div class="d-block"><h4>Typical work</h4><ul><li>Personalized outreach across appropriate channels</li><li>Initial qualification and context gathering</li><li>Qualification meeting scheduled when interest is confirmed</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>Two-way engagement or a scheduled qualification meeting</li></ul></div></article>
+<article class="scard sys-contact" id="card-engaged"><p class="d-eyebrow">Contact Status</p><h3 class="d-name">Engaged</h3><p class="d-mile">A meaningful two-way interaction has been reached.</p><div class="d-block"><h4>Exit criteria</h4><ul><li>A qualification meeting is scheduled</li></ul></div></article>
+<article class="scard sys-contact" id="card-sql"><p class="d-eyebrow">Contact Status</p><h3 class="d-name">Meeting Scheduled</h3><p class="d-mile">A qualification meeting is booked with a relevant contact around a plausible business need or project.</p><p class="d-note">The booking creates a meeting record and a Stage 0 opportunity together. Multiple contacts and meetings can map to one opportunity. Click the qualification-meeting marker to see how meeting disposition stays separate from pipeline acceptance.</p></article>
+<article class="scard sys-opp" id="card-o0"><p class="d-eyebrow">Opportunity Stage &middot; acceptance gate</p><h3 class="d-name">Qualification Review</h3><p class="d-mile">A pre-pipeline opportunity created when a qualification meeting is scheduled. It captures demand without inflating accepted pipeline before the meeting occurs and the opportunity is validated.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">0<em>%</em></span><span class="d-l">Illustrative probability</span></div><div class="d-fc"><span class="fc fc-omitted">Omitted</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-omitted" style="width:0%"></span></div></div><div class="d-facts"><span>Pre-pipeline</span><span>Sales-owned</span><span>Acceptance required</span></div><div class="d-block"><h4>Typical work</h4><ul><li>Conduct the qualification meeting</li><li>Validate need, fit, timing, and the next step</li><li>Capture estimated value when advancing</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>Qualification meeting completed</li><li>Acceptance criteria validated</li><li>Buyer commits to a meaningful next step</li><li>A credible buying window is identified</li></ul></div><div class="d-block"><h4>Qualification outcome</h4><ul><li>Accept -&gt; Stage 1 Problem Discovery</li><li>Hold -&gt; remain at Stage 0 pending more evidence</li><li>Disqualify -&gt; Stage 9 Unqualified with a reason captured</li></ul></div></article>
+<article class="scard sys-opp" id="card-o1"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Problem Discovery</h3><p class="d-mile">The opportunity has been accepted into pipeline. The team clarifies the current state, desired outcome, and people involved.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">10<em>%</em></span><span class="d-l">Illustrative probability</span></div><div class="d-fc"><span class="fc fc-pipeline">Pipeline</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-pipeline" style="width:10%"></span></div></div><div class="d-block"><h4>Typical work</h4><ul><li>Explore the current state, pain, impact, and desired outcome</li><li>Capture high-level business and technical context</li><li>Identify stakeholders and internal resources</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>The problem and use case are documented</li><li>The buyer commits to a defined next step</li></ul></div></article>
+<article class="scard sys-opp" id="card-o2"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Requirements Alignment</h3><p class="d-mile">The team confirms what must be solved, who is involved, and what a viable solution must support before a formal evaluation.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">25<em>%</em></span><span class="d-l">Illustrative probability</span></div><div class="d-fc"><span class="fc fc-pipeline">Pipeline</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-pipeline" style="width:25%"></span></div></div><div class="d-block"><h4>Typical work</h4><ul><li>Expand business and technical discovery</li><li>Document requirements, constraints, and success outcomes</li><li>Engage decision participants and additional stakeholders</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>Requirements and success outcomes are documented</li><li>Decision participants are identified</li><li>The buyer confirms that a formal evaluation is worthwhile</li></ul></div></article>
+<article class="scard sys-opp" id="card-o3"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Solution Evaluation</h3><p class="d-mile">The buyer actively evaluates business and technical fit against agreed needs and objectives.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">40<em>%</em></span><span class="d-l">Illustrative probability</span></div><div class="d-fc"><span class="fc fc-best">Best Case</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-best" style="width:40%"></span></div></div><div class="d-block"><h4>Typical work</h4><ul><li>Tailored demonstration, workshop, trial, or proof of concept</li><li>Technical, security, integration, and operational review</li><li>Review findings against success criteria</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>Agreed success criteria are met</li><li>Material risks are resolved or mitigated</li><li>The buyer confirms solution fit and the remaining decision path</li></ul></div></article>
+<article class="scard sys-opp" id="card-o4"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Business Case</h3><p class="d-mile">The team translates validated fit into a credible scope, value case, and proposal that the buyer can evaluate internally.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">55<em>%</em></span><span class="d-l">Illustrative probability</span></div><div class="d-fc"><span class="fc fc-best">Best Case</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-best" style="width:55%"></span></div></div><div class="d-block"><h4>Typical work</h4><ul><li>Develop scope, configuration, and commercial structure</li><li>Refine value and expected outcomes with the buyer</li><li>Enable the champion to build internal alignment</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>The proposal has been delivered and reviewed</li><li>Scope reflects the intended purchase</li><li>Budget authority and approval requirements are understood</li></ul></div></article>
+<article class="scard sys-opp" id="card-o5"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Commercial Review</h3><p class="d-mile">The buyer has indicated a preferred direction and the parties are aligning commercial terms and the path to approval.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">75<em>%</em></span><span class="d-l">Illustrative probability</span></div><div class="d-fc"><span class="fc fc-most">Most Likely</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-most" style="width:75%"></span></div></div><div class="d-block"><h4>Typical work</h4><ul><li>Review scope and commercial terms</li><li>Confirm stakeholder and executive alignment</li><li>Coordinate procurement, legal, security, and vendor requirements</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>The buyer states intent to proceed subject to defined conditions</li><li>Decision authority and funding are confirmed</li><li>Remaining approvals, dependencies, owners, and dates are documented</li></ul></div></article>
+<article class="scard sys-opp" id="card-o6"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Final Approval</h3><p class="d-mile">The purchase decision is made. The remaining work executes contracting and required approvals.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">90<em>%</em></span><span class="d-l">Illustrative probability</span></div><div class="d-fc"><span class="fc fc-commit">Commit</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-commit" style="width:90%"></span></div></div><div class="d-block"><h4>Typical work</h4><ul><li>Coordinate contract, procurement, and signature steps</li><li>Validate the data required for an accurate handoff</li><li>Prepare implementation and post-sale ownership</li></ul></div><div class="d-block"><h4>Exit criteria</h4><ul><li>The buyer has explicitly confirmed the decision</li><li>Final terms are agreed</li><li>Remaining approval steps have named owners and dates</li><li>No substantive purchase decision remains open</li></ul></div></article>
+<article class="scard sys-opp" id="card-won" data-term="won"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Closed Won</h3><p class="d-mile">The opportunity is closed after the required commercial evidence has been received.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">100<em>%</em></span><span class="d-l">Probability</span></div><div class="d-fc"><span class="fc fc-closed">Closed</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-won" style="width:100%"></span></div></div><div class="d-block"><h4>Governed handoff</h4><ul><li>Validate required order and customer information</li><li>Complete the appropriate approval</li><li>Release downstream workflows only after validation</li></ul></div><p class="d-note d-gate"><span class="gate-i">⚠️</span> <b>Automation follows approval.</b> A Closed Won event should not trigger downstream work until the required commercial and operational data has been validated.</p><div class="d-block"><h4>Post-sale transition</h4><ul><li>Assign onboarding ownership</li><li>Complete internal handoffs with shared context</li></ul></div></article>
+<article class="scard sys-opp" id="card-lost" data-term="lost"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Closed Lost</h3><p class="d-mile">An accepted pipeline opportunity that will not move forward this cycle.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">0<em>%</em></span><span class="d-l">Probability</span></div><div class="d-fc"><span class="fc fc-omitted">Omitted</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-lost" style="width:0%"></span></div></div><div class="d-block"><h4>Closure data</h4><ul><li>Primary loss reason</li><li>Competitor or alternative where applicable</li><li>Decision status and feedback</li><li>Re-engagement trigger where known</li></ul></div></article>
+<article class="scard sys-opp" id="card-unq" data-term="unq"><p class="d-eyebrow">Opportunity Stage</p><h3 class="d-name">Unqualified</h3><p class="d-mile">A Stage 0 opportunity that did not meet pipeline-acceptance criteria. Only reachable from Stage 0.</p><div class="d-meta"><div class="d-prob"><span class="d-pn">0<em>%</em></span><span class="d-l">Probability</span></div><div class="d-fc"><span class="fc fc-omitted">Omitted</span><span class="d-l">Forecast</span></div><div class="d-meter"><span class="d-fill fill-omitted" style="width:0%"></span></div></div><div class="d-block"><h4>Reasons</h4><ul><li>No validated need</li><li>Outside supported use cases or ICP</li><li>No meaningful engagement</li><li>No credible next step</li><li>Timeline beyond the window</li><li>Duplicate or invalid</li></ul></div></article>
+<article class="scard sys-off" id="card-nurture"><p class="d-eyebrow">Off-ramp</p><h3 class="d-name">Nurture</h3><p class="d-mile">Not actively worked. The contact can re-enter the working funnel when new evidence makes it actionable.</p><div class="d-block"><h4>Design principle</h4><ul><li>Available from any Contact Status</li><li>Preserves original source and lifecycle history</li><li>Re-entry requires a new signal or intentional review</li></ul></div></article>
+<article class="scard sys-off" id="card-archived" data-term="unq"><p class="d-eyebrow">Off-ramp</p><h3 class="d-name">Archived</h3><p class="d-mile">A disqualified, duplicate, invalid, or otherwise unusable contact.</p><div class="d-block"><h4>Design principle</h4><ul><li>Available from any Contact Status</li><li>Requires a structured reason</li><li>Retains history without leaving the record in an active queue</li></ul></div></article>
+  </div>
+
+  <div class="ref">
+    <div class="rcard iqm-track"><h3>How the meeting links Contact and Opportunity</h3>
+      <p class="rl">The qualification meeting is tracked separately from the opportunity it belongs to. One Stage 0 opportunity is created with the first booking and can accumulate additional meeting records over time.</p>
+      <div class="rec-flow">
+        <span class="rec rec-contact"><b>Contact</b><span>Meeting Scheduled</span></span>
+        <span class="rec-ar">books &rarr;</span>
+        <span class="rec rec-mtg"><b>Qualification meeting</b><span>the scheduled interaction</span></span>
+        <span class="rec-ar">opens &rarr;</span>
+        <span class="rec rec-opp"><b>Opportunity</b><span>Stage 0</span></span>
+      </div>
+      <div class="rec-facts">
+        <div><span class="rf-k">Cardinality</span>Many contacts can map to one opportunity. One opportunity can hold many meetings; each reschedule, no-show, or re-book becomes a distinct meeting record.</div>
+        <div><span class="rf-k">Each meeting carries</span>A disposition describing whether it happened and, only if it occurred, an opportunity outcome: Accept, Hold, or Disqualify.</div>
+      </div>
+    </div>
+    <div class="rcard"><h3>Forecast categories</h3><p class="rl">How each category reflects confidence in closing within the period.</p><div class="fclist"><div class="fcrow"><span class="fc fc-pipeline">Pipeline</span><span>Early-stage, real opportunity not yet qualified to forecast a close window.</span></div><div class="fcrow"><span class="fc fc-best">Best Case</span><span>Qualified. Could close if everything goes right, but not the most likely call.</span></div><div class="fcrow"><span class="fc fc-most">Most Likely</span><span>More likely to close in period than not.</span></div><div class="fcrow"><span class="fc fc-commit">Commit</span><span>Expected to close barring something unexpected.</span></div><div class="fcrow"><span class="fc fc-omitted">Omitted</span><span>Not forecasting in period.</span></div><div class="fcrow"><span class="fc fc-closed">Closed</span><span>System-set at close.</span></div></div></div>
+    <div class="rcard"><h3>Meeting disposition</h3><p class="rl">Separate from the qualification outcome above, disposition records whether a scheduled meeting happened. Select an outcome to see what it does.</p>
+      <div class="disp"><div class="dflow" id="disp-flow">
+        <button type="button" class="out sched" data-eff="scheduled">Scheduled</button>
+        <span class="ar">-&gt;</span>
+        <div class="outs">
+          <button type="button" class="out adv" data-eff="occurred">Occurred</button>
+          <button type="button" class="out" data-eff="rescheduled">Rescheduled</button>
+          <button type="button" class="out" data-eff="canceled">Canceled</button>
+          <button type="button" class="out" data-eff="noshowed">No Showed</button>
+        </div></div>
+        <p class="dn" id="disp-result">A meeting is on the calendar, awaiting its outcome. Each disposition below closes it out; only Occurred advances the record.</p></div>
+    </div>
+  </div>
+
+  <footer class="lifecycle-key">
+    <span><b>Portfolio example</b> &middot; Company-specific terminology, thresholds, and implementation details have been anonymized and modified.</span>
+    <span class="key">
+      <span class="k"><span class="sw" style="background:var(--src)"></span>Source</span>
+      <span class="k"><span class="sw" style="background:var(--contact)"></span>Contact</span>
+      <span class="k"><span class="sw" style="background:var(--opp)"></span>Opportunity</span>
+      <span class="k"><span class="sw" style="background:var(--won)"></span>Won</span>
+      <span class="k"><span class="sw" style="background:var(--lost)"></span>Lost</span>
+      <span class="k"><span class="sw" style="background:var(--omit)"></span>Unqualified</span>
+    </span>
+  </footer>
+</div>
+  </section>
+
+  <section class="design-note page-width" aria-labelledby="design-note-title">
+    <span class="portfolio-eyebrow">What I designed</span>
+    <h2 id="design-note-title">Lifecycle logic with governed handoffs.</h2>
+    <p>I designed the lifecycle around explicit entry criteria, exit criteria, ownership, off-ramps, and governed handoffs. The interactive model shows how multiple contacts and meetings can contribute to one opportunity without collapsing those records into a single status.</p>
+  </section>
+</main>
+
+<footer class="portfolio-footer page-width">
+  <span>molly-young / proof-of-work</span>
+  <nav aria-label="Footer navigation"><a href="../">All proof</a><a href="../../">Overview</a><a href="../../molly-young-v1.0.0.pdf">Resume</a></nav>
+</footer>
+
+<script>
+(function(){
+  var started = false;
+  function init(){
+  var order = ["inbound","outbound","partner","new","mql","sal","engaged","sql","o0","o1","o2","o3","o4","o5","o6","won","lost","unq","nurture","archived","dealreg"];
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('.gnode'));
+  var detail = document.getElementById('detail');
+  var vp = document.getElementById('viewport'), canvas = document.getElementById('canvas');
+  var pn = document.getElementById('pn'), ps = document.getElementById('ps'), playB = document.getElementById('play');
+  var sysName = {source:'Lead source', contact:'Contact Status', meeting:'Meeting record', opp:'Opportunity Stage', off:'Off-ramp'};
+  var idx = 0, timer = null, scale = 1;
+  function meta(id){ var n=document.querySelector('.gnode[data-target="'+id+'"]'); return {name:n.querySelector('.g-name').textContent, sys:n.className.match(/sys-(\w+)/)[1]}; }
+  function show(i, user){
+    idx = (i + order.length) % order.length; var id = order[idx];
+    nodes.forEach(function(n){ n.classList.toggle('active', n.getAttribute('data-target')===id); });
+    var card = document.getElementById('card-'+id);
+    detail.innerHTML = '<div class="scard '+card.className.replace('scard','').trim()+'"'+(card.getAttribute('data-term')?' data-term="'+card.getAttribute('data-term')+'"':'')+'>'+card.innerHTML+'</div>';
+    var m = meta(id); pn.textContent = m.name; ps.textContent = sysName[m.sys] + ' · ' + (idx+1) + ' / ' + order.length;
+    var active = document.querySelector('.gnode.active');
+    if(active && active.scrollIntoView){ active.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'}); }
+    if(user) stop();
+  }
+  function stop(){ if(timer){ clearInterval(timer); timer=null; playB.innerHTML='▶'; } }
+  function play(){ if(timer){ stop(); return; } playB.innerHTML='▌▌';
+    timer=setInterval(function(){ if(idx>=order.length-1){ stop(); return; } show(idx+1,false); }, 2400); }
+  function applyScale(s){
+    scale=Math.max(.2, Math.min(1.6, s));
+    canvas.style.transform='scale('+scale+')';
+    canvas.style.width=(3050*scale)+'px';
+    canvas.style.height=(430*scale)+'px';
+  }
+  function fit(){ applyScale((vp.clientWidth-28)/3050); }
+  nodes.forEach(function(n){ n.addEventListener('click', function(){ show(order.indexOf(n.getAttribute('data-target')), true); }); });
+  document.getElementById('prev').addEventListener('click', function(){ show(idx-1, true); });
+  document.getElementById('next').addEventListener('click', function(){ show(idx+1, true); });
+  playB.addEventListener('click', play);
+  document.getElementById('zin').addEventListener('click', function(){ applyScale(scale+.15); });
+  document.getElementById('zout').addEventListener('click', function(){ applyScale(scale-.15); });
+  document.getElementById('zfit').addEventListener('click', fit);
+  document.addEventListener('keydown', function(e){ if(e.key==='ArrowRight'){show(idx+1,true);} else if(e.key==='ArrowLeft'){show(idx-1,true);} });
+  show(0, false);
+
+  // Meeting disposition: interactive outcome selector
+  var effs = {
+    scheduled:  ['sched', 'Booked', 'A meeting is on the calendar with the prospect, awaiting its outcome. The dispositions to the right each close it out.'],
+    occurred:   ['adv',   'Advances', 'The meeting happened, so the record advances to the next step. This is the only outcome that moves things forward.'],
+    rescheduled:['close', 'Closes this meeting', 'The current meeting is closed and a new one is booked. That re-book is a fresh meeting, not a loop back.'],
+    canceled:   ['close', 'Closes this meeting', 'The current meeting is closed. Booking again later starts a new meeting, not a continuation of this one.'],
+    noshowed:   ['close', 'Closes this meeting', 'The prospect did not attend, so this meeting is closed. Booking again starts a new meeting, not a loop.']
+  };
+  function wireDisp(flowId, resultId, outcomeId){
+    var outs = Array.prototype.slice.call(document.querySelectorAll('#'+flowId+' .out'));
+    var res = document.getElementById(resultId);
+    var oc = outcomeId ? document.getElementById(outcomeId) : null;
+    if(!res || !outs.length) return;
+    function selOut(el){
+      outs.forEach(function(o){ o.classList.remove('sel'); });
+      el.classList.add('sel');
+      var eff = el.getAttribute('data-eff'), e = effs[eff];
+      res.innerHTML = '<span class="dn-tag t-'+e[0]+'">'+e[1]+'</span>'+e[2];
+      if(oc){ oc.hidden = (eff !== 'occurred'); }
+    }
+    outs.forEach(function(o){ o.addEventListener('click', function(){ selOut(o); }); });
+    selOut(outs[0]);
+  }
+  wireDisp('disp-flow','disp-result');
+  wireDisp('ov-flow','ov-result','ov-outcome');
+
+  // IQM marker -> disposition overlay
+  var overlay = document.getElementById('iqm-overlay');
+  var iqmBtn = document.getElementById('iqm-btn');
+  function openOv(){ if(overlay){ overlay.hidden=false; } }
+  function closeOv(){ if(overlay){ overlay.hidden=true; } }
+  if(iqmBtn){ iqmBtn.addEventListener('click', openOv); }
+  if(overlay){
+    Array.prototype.slice.call(overlay.querySelectorAll('[data-close]')).forEach(function(el){ el.addEventListener('click', closeOv); });
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeOv(); } });
+
+  // Collapse / show the detail drawer to see the whole flow
+  var stageEl = document.querySelector('.stage');
+  var dX = document.getElementById('detail-x'), dShow = document.getElementById('detail-show');
+  if(dX && stageEl) dX.addEventListener('click', function(){ stageEl.classList.add('detail-hidden'); });
+  if(dShow && stageEl) dShow.addEventListener('click', function(){ stageEl.classList.remove('detail-hidden'); });
+  }
+  function boot(){
+    if(started) return true;
+    if(!document.querySelector('.gnode')) return false;
+    started = true; init(); return true;
+  }
+  if(!boot()){
+    document.addEventListener('DOMContentLoaded', boot);
+    var _tries = 0, _iv = setInterval(function(){ if(boot() || ++_tries > 60){ clearInterval(_iv); } }, 50);
+  }
+})();
+</script>
+</body>
+</html>
