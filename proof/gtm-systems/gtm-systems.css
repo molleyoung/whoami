@@ -232,10 +232,9 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 @media(max-width:720px) {
   .page-width { width: min(1180px,calc(100% - 28px)); }
-  .site-header { padding-inline: 14px; }
-  .site-header nav { gap: 14px; overflow: auto; }
+  .site-header { gap: 12px; padding-inline: 14px; }
+  .site-header nav { flex: 1; min-width: 0; justify-content: space-between; gap: 0; overflow: visible; }
   .site-header nav a { font-size: .5rem; }
-  .site-header nav a:last-child { display: none; }
   .hero { padding-block: 38px 42px; }
   .hero h1 { font-size: clamp(2.65rem,12vw,3.45rem); line-height: .9; }
   .hero p { margin-top: 22px; font-size: .9rem; }
