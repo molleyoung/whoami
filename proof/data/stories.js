@@ -133,14 +133,14 @@ export const stories = [
     thesis: "Deterministic validation handles the rules; Claude handles address validation and human-readable fix guidance without adding work for Sales.",
     systems: [
       { name: "Salesforce", role: "Deal source + approval home", group: "source", responsibilities: ["Deal source", "Approval-status home"] },
-      { name: "Python", role: "Validation engine", group: "transform", responsibilities: ["Deterministic validation rules", "Approximately 47 checks for direct deals", "Approximately 53 checks for partner deals"] },
+      { name: "Python", role: "Validation engine", group: "transform", responsibilities: ["Deterministic validation rules"] },
       { name: "Claude", role: "Context layer", group: "transform", responsibilities: ["Address validation", "Human-readable fix guidance"] },
       { name: "Slack", role: "Exception delivery", group: "activate", responsibilities: ["Actionable exceptions"] },
       { name: "FoundryOps / g-gremlin", role: "Access layer", group: "source", responsibilities: ["Salesforce access"] },
-      { name: "launchd", role: "Scheduler", group: "observe", responsibilities: ["Unattended scheduling", "Runs every two hours from 6am to 8pm"] }
+      { name: "launchd", role: "Scheduler", group: "observe", responsibilities: ["Unattended recurring schedule"] }
     ],
     operatorSteps: [
-      { actor: "launchd", action: "Runs the review every two hours from 6am to 8pm." },
+      { actor: "launchd", action: "Runs the review unattended on a recurring schedule." },
       { actor: "FoundryOps / g-gremlin", action: "Provides Salesforce access for the review." },
       { actor: "Python", action: "Runs deterministic validation across direct or partner deal checks." },
       { actor: "Claude", action: "Validates addresses and produces human-readable fix guidance." },
@@ -152,8 +152,8 @@ export const stories = [
       after: ["Zero additional process, stages, tools, or data entry for Sales", "Clean deals can be auto-approved", "Actionable exceptions arrive with fix guidance"]
     },
     results: {
-      measured: ["Mean time-to-approval decreased from approximately 2.6 days to under one day", "Same-day approval increased from 60% to approximately 90%", "241 deals auto-approved", "49 deals caught and corrected before shipping, invoicing, or provisioning", "Approximately 47 checks for direct deals", "Approximately 53 checks for partner deals", "Runs every two hours from 6am to 8pm", "Zero additional process, stages, tools, or data entry for Sales"],
-      evidence: ["Salesforce remains the approval-status home", "Rules are deterministic where deterministic validation is appropriate", "Slack exceptions include human-readable guidance"],
+      measured: ["Mean time-to-approval decreased from approximately 2.6 days to under one day", "Same-day approval rate increased from about 60% to approximately 90%"],
+      evidence: ["Validation issues are surfaced before downstream shipping, invoicing, or provisioning", "Runs unattended on a recurring schedule", "No additional Sales workflow"],
       validating: []
     },
     honestRead: ["Claude is used for address validation and readable guidance, not as a replacement for deterministic validation.", "The system improves control without adding a new seller workflow."]

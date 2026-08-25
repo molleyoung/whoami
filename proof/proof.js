@@ -1,67 +1,59 @@
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => {
-    const target = document.querySelector(link.getAttribute("href"));
+(function () {
+  const tabs = Array.from(document.querySelectorAll('[role="tab"][data-view]'));
+  const panels = Array.from(document.querySelectorAll('[role="tabpanel"][data-panel]'));
+  if (!tabs.length || !panels.length) return;
 
-    if (!target) return;
-    event.preventDefault();
-    target.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-      block: "start"
+  const validViews = new Set(tabs.map((tab) => tab.dataset.view));
+
+  function viewFromLocation() {
+    const requested = new URLSearchParams(window.location.search).get('view');
+    if (validViews.has(requested)) return requested;
+
+    if (window.location.hash) {
+      const target = document.querySelector(window.location.hash);
+      const parentPanel = target && target.closest('[data-panel]');
+      if (parentPanel) return parentPanel.dataset.panel;
+    }
+
+    return 'gtm-motion';
+  }
+
+  function selectView(view, options = {}) {
+    if (!validViews.has(view)) view = 'gtm-motion';
+
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.view === view;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+    });
+
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.panel !== view;
+    });
+
+    const url = new URL(window.location.href);
+    if (view === 'gtm-motion') url.searchParams.delete('view');
+    else url.searchParams.set('view', view);
+    history.replaceState({ view }, '', url);
+
+    const activeTab = tabs.find((tab) => tab.dataset.view === view);
+    if (options.focus && activeTab) activeTab.focus();
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectView(tab.dataset.view));
+    tab.addEventListener('keydown', (event) => {
+      let nextIndex = index;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === 'Home') nextIndex = 0;
+      else if (event.key === 'End') nextIndex = tabs.length - 1;
+      else return;
+
+      event.preventDefault();
+      selectView(tabs[nextIndex].dataset.view, { focus: true });
     });
   });
-});
 
-const detailToggles = [...document.querySelectorAll(".detail-toggle")];
-const detailPanels = [...document.querySelectorAll(".flagship-detail-panel")];
-
-function closeDetail(panel, restoreFocus = false) {
-  const trigger = detailToggles.find((button) => button.getAttribute("aria-controls") === panel.id);
-  panel.hidden = true;
-  trigger?.setAttribute("aria-expanded", "false");
-  trigger?.closest(".flagship-card")?.classList.remove("is-open");
-  if (trigger) trigger.setAttribute("aria-label", trigger.getAttribute("aria-label").replace(/^Collapse proof:/, "Open proof:"));
-  if (restoreFocus) trigger?.focus();
-}
-
-function openDetail(trigger) {
-  const panel = document.getElementById(trigger.getAttribute("aria-controls"));
-  if (!panel) return;
-
-  const wasOpen = trigger.getAttribute("aria-expanded") === "true";
-  detailPanels.forEach((item) => closeDetail(item));
-  if (wasOpen) return;
-
-  panel.hidden = false;
-  trigger.setAttribute("aria-expanded", "true");
-  trigger.closest(".flagship-card")?.classList.add("is-open");
-  trigger.setAttribute("aria-label", trigger.getAttribute("aria-label").replace(/^Open proof:/, "Collapse proof:"));
-  panel.focus({ preventScroll: true });
-  panel.scrollIntoView({
-    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-    block: "nearest"
-  });
-}
-
-detailToggles.forEach((trigger) => {
-  trigger.addEventListener("click", () => openDetail(trigger));
-  trigger.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    event.preventDefault();
-    openDetail(trigger);
-  });
-});
-
-document.querySelectorAll(".detail-close").forEach((button) => {
-  button.addEventListener("click", () => closeDetail(button.closest(".flagship-detail-panel"), true));
-  button.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    event.preventDefault();
-    closeDetail(button.closest(".flagship-detail-panel"), true);
-  });
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key !== "Escape") return;
-  const openPanel = detailPanels.find((panel) => !panel.hidden);
-  if (openPanel) closeDetail(openPanel, true);
-});
+  selectView(viewFromLocation());
+})();
