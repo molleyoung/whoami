@@ -43,6 +43,7 @@ button, input { font: inherit; }
 .hero-copy { max-width: 860px; position: relative; z-index: 2; }
 .eyebrow, .section-label { margin: 0; color: var(--muted); font-size: .69rem; font-weight: 740; letter-spacing: .1em; text-transform: uppercase; }
 .eyebrow::before, .section-label::before { content: ""; width: 22px; height: 1px; margin-right: 10px; display: inline-block; vertical-align: middle; background: var(--steel); }
+.overview-hero .eyebrow::before, .operating-model .section-label::before, .career .section-label::before { display: none; }
 .hero-copy h1 { max-width: 760px; margin: 22px 0 16px; font-size: clamp(3rem,5vw,4.65rem); font-weight: 690; line-height: .98; letter-spacing: -.055em; }
 .hero-copy > p:last-of-type { max-width: 680px; margin: 0; color: var(--body); font-size: 1.04rem; line-height: 1.66; }
 .hero-actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 10px; }
