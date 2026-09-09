@@ -4,27 +4,34 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="An interactive lifecycle architecture connecting acquisition source, contact progression, meeting outcomes, pipeline acceptance, forecasting, and post-sale handoff." />
-<title>New Business Lifecycle Architecture | Molly Young</title>
+<title>New Business Lifecycle | Molly Young</title>
+<link rel="stylesheet" href="../../portfolio.css">
 <link rel="stylesheet" href="new-business-lifecycle.css">
 </head>
-<body>
+<body class="lifecycle-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="site-shell lifecycle-site-shell">
 <header class="site-header">
-  <a class="mark" href="../../" aria-label="Molly Young home">M</a>
-  <nav aria-label="Portfolio navigation">
+  <a class="wordmark" href="../../" aria-label="Molly Young overview">Molly Young</a>
+  <nav aria-label="Primary navigation">
     <a href="../../">Overview</a>
     <a href="../" aria-current="page">Proof</a>
-    <a href="../../molly-young-v1.0.0.pdf">Resume</a>
+    <a href="../../molly-young-resume-v1.1.0.pdf" target="_blank" rel="noopener">Resume</a>
     <a href="mailto:mollyeyoung@gmail.com">Email</a>
     <a href="https://www.linkedin.com/in/molleyoung/" target="_blank" rel="noopener">LinkedIn</a>
   </nav>
 </header>
 
-<main>
+<main id="main">
   <section class="proof-hero page-width" aria-labelledby="page-title">
-    <span class="portfolio-eyebrow">Lifecycle Architecture</span>
-    <h1 id="page-title">From first signal to accepted pipeline</h1>
-    <p class="proof-intro">A working model for connecting acquisition source, contact progression, meeting outcomes, opportunity acceptance, forecasting, and post-sale handoff.</p>
-    <p class="proof-context">A lifecycle map is only useful when it defines what each state means, what causes a record to move, and which object owns the truth. This example separates contact progression from meeting disposition and pipeline acceptance, so activity does not automatically become forecastable pipeline.</p>
+    <a class="lifecycle-back" href="../"><span aria-hidden="true">←</span> Back to all proof</a>
+    <span class="portfolio-eyebrow">Revenue process / interactive drilldown</span>
+    <h1 id="page-title">New Business Lifecycle</h1>
+    <p class="proof-intro">A working operating model connecting acquisition source, contact progression, meeting outcomes, opportunity acceptance, forecasting, and post-sale handoff.</p>
+    <div class="lifecycle-intro-grid">
+      <p class="proof-context"><strong>Problem</strong> Activity, meetings, and opportunity creation can blur together, inflating pipeline and obscuring what each lifecycle state actually means.</p>
+      <p class="proof-context"><strong>My role</strong> Designed the lifecycle logic, object boundaries, entry and exit criteria, off-ramps, forecast categories, and governed handoffs shown below.</p>
+    </div>
     <p class="anonymization-note">Representative example. Company-specific terminology, thresholds, and implementation details have been anonymized and modified.</p>
   </section>
 
@@ -294,7 +301,7 @@
   .postit .pi-body{font-size:12.5px; line-height:1.5; color:var(--tx2); margin:0}
   .postit .pi-body b{color:var(--tx); font-weight:600}
 </style>
-<script>document.documentElement.className="js";if(document.body){document.body.className="js";}</script>
+<script>document.documentElement.classList.add("js");if(document.body){document.body.classList.add("js");}</script>
 <div class="page">
   <div class="board">
     <div class="topbar">
@@ -501,10 +508,12 @@
   </section>
 </main>
 
-<footer class="portfolio-footer page-width">
-  <span>molly-young / proof-of-work</span>
-  <nav aria-label="Footer navigation"><a href="../">All proof</a><a href="../../">Overview</a><a href="../../molly-young-v1.0.0.pdf">Resume</a></nav>
+<footer class="site-footer">
+  <div><strong>Molly Young</strong><span>St. Paul, MN</span></div>
+  <a href="https://www.linkedin.com/in/molleyoung/" target="_blank" rel="noopener">LinkedIn</a>
+  <a href="mailto:mollyeyoung@gmail.com">mollyeyoung@gmail.com</a>
 </footer>
+</div>
 
 <script>
 (function(){
