@@ -90,9 +90,9 @@
 .lifecycle-site-shell .portfolio-eyebrow { display: block; margin-bottom: 14px; color: #a9bdc2; font: 720 .62rem ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing: .09em; text-transform: uppercase; }
 .lifecycle-site-shell .proof-hero h1 { max-width: 900px; margin: 0; color: #f1eee7; font-size: clamp(3.1rem,6.5vw,6.25rem); font-weight: 670; line-height: .91; letter-spacing: -.062em; }
 .lifecycle-site-shell .proof-intro { max-width: 760px; margin: 24px 0 0; color: #c9c7c0; font-size: clamp(1rem,1.6vw,1.2rem); line-height: 1.65; }
-.lifecycle-intro-grid { margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-.lifecycle-site-shell .proof-context { margin: 0; padding: 18px 0 2px 20px; border-left: 1px solid #7f9da6; color: #c9c7c0; font-size: .8rem; line-height: 1.65; }
-.lifecycle-site-shell .proof-context strong { display: block; margin-bottom: 7px; color: #f1eee7; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; }
+.lifecycle-intro-grid { margin-top: 34px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.lifecycle-site-shell .proof-context { margin: 0; padding: 18px 0 2px 20px; border-left: 1px solid #7f9da6; color: #c9c7c0; font-size: .875rem; line-height: 1.7; }
+.lifecycle-site-shell .proof-context strong { display: block; margin-bottom: 7px; color: #f1eee7; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
 .lifecycle-site-shell .anonymization-note { margin: 24px 0 0; color: #b49a6a; font: .62rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace; }
 
 .lifecycle-site-shell .interactive-shell { padding: 0 0 34px; border-block: 1px solid #555858; background: #111313; }
@@ -120,6 +120,10 @@
 .lifecycle-site-shell > .site-footer span,
 .lifecycle-site-shell > .site-footer > a { color: #c9c7c0; font-size: .7rem; text-decoration: none; }
 .lifecycle-site-shell > .site-footer > a:hover { color: #a9bdc2; }
+
+@media (max-width: 1100px) {
+  .lifecycle-intro-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 @media (max-width: 820px) {
   .lifecycle-site-shell .interactive-shell .viewport { min-height: 360px; }
