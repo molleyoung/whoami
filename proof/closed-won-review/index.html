@@ -1,105 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A human-in-the-loop Closed Won review that protects fulfillment, revenue recognition, and compensation while Salesforce-to-NetSuite integration evolves." />
-  <title>Closed Won Review | Molly Young</title>
-  <link rel="stylesheet" href="https://molleyoung.github.io/whoami/portfolio.css" />
-  <link rel="stylesheet" href="https://molleyoung.github.io/whoami/proof/case-study.css" />
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A human-in-the-loop Closed Won review protecting fulfillment while Salesforce-to-NetSuite integration evolves.">
+<title>Closed Won Review Agent | Molly Young</title>
+<style>
+:root{color-scheme:dark;--bg:#0d100e;--surface:#151816;--line:#363c38;--text:#f1eee7;--body:#c9ccc6;--blue:#a9bdc2;--gold:#c8b18a;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7}a{color:inherit}button{font:inherit}a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:5px}.shell{max-width:1170px;margin:28px auto;border:1px solid #505650;background:var(--surface)}.top{padding:20px 48px;display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid var(--line);align-items:center}.brand{font-size:13px;font-weight:750;text-transform:uppercase;letter-spacing:.04em;text-decoration:none}nav{display:flex;gap:28px}nav a{font-size:12px;color:var(--body);text-decoration:none}.intro{padding:46px 48px 42px}h1{font-size:clamp(42px,5.5vw,72px);line-height:1.06;letter-spacing:-.045em;font-weight:680;max-width:850px;margin:0 0 36px}h2{font-size:30px;line-height:1.2;letter-spacing:-.025em;margin:0 0 18px}.opening{display:grid;grid-template-columns:1fr 1fr;gap:44px;border-top:1px solid var(--line);padding-top:26px}.opening h2{font-size:21px;letter-spacing:-.015em;margin-bottom:14px}p{margin:0 0 16px;color:var(--body);font-size:15px;line-height:1.75}p:last-child{margin-bottom:0}.build,.impact{border-top:1px solid var(--line);padding:40px 48px}.lead{max-width:1020px}.hint{font-size:13px;color:#a6afa7;margin:26px 0 17px}.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px;list-style:none;margin:0;padding:0}.flow li{position:relative;min-width:0}.flow li:not(:last-child)::after{content:"→";position:absolute;right:-17px;top:45%;color:var(--blue)}.step{width:100%;height:100%;min-height:200px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:13px;padding:19px 16px;background:#1a2224;border:1px solid #48565a;border-top:2px solid var(--blue);color:var(--text);cursor:pointer}.step:hover{background:#233035;border-color:var(--blue)}.step .number{font-size:11px;letter-spacing:.08em;color:var(--blue);font-family:ui-monospace,monospace}.step strong{font-size:16px;line-height:1.35}.step .summary{font-size:13px;line-height:1.55;color:var(--body)}.plus{align-self:flex-end;margin-top:auto;font-size:19px;line-height:1;color:var(--blue)}.human .step{background:#25221c;border-color:#665d4c;border-top-color:var(--gold)}.human .step:hover{background:#322c22}.human .number,.human .plus{color:var(--gold)}.loop{margin:18px 0 0;padding:12px 18px;width:100%;border:1px dashed #7c7059;color:var(--gold);background:transparent;text-align:center;cursor:pointer;font-size:13px}.loop:hover{background:#25221c}.technical{margin:20px 0 0;font-size:13px;color:#aeb9b6}.technical strong{color:var(--blue)}.impact-body{display:grid;grid-template-columns:1fr 1fr;gap:44px}.impact h2{margin-bottom:20px}.impact strong{color:var(--text)}footer{border-top:1px solid var(--line);padding:22px 48px;display:flex;justify-content:space-between;gap:20px;color:var(--body);font-size:12px}footer a{font-size:12px}.skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:12px;padding:10px;background:var(--surface);z-index:5}dialog{width:min(650px,calc(100% - 32px));max-height:85vh;overflow:auto;border:1px solid #65736b;border-radius:3px;background:#191e1b;color:var(--text);padding:30px;box-shadow:0 20px 80px #0009}dialog::backdrop{background:#000b}dialog h2{font-size:26px;margin-right:45px}dialog p{font-size:15px}dialog ul{color:var(--body);padding-left:20px;font-size:15px}dialog li{margin-bottom:8px}.close{float:right;border:1px solid var(--line);background:transparent;color:var(--text);padding:5px 12px;cursor:pointer;font-size:20px}.dialog-label{color:var(--blue);font-size:12px;margin-bottom:12px}body:has(dialog[open]){overflow:hidden}
+@media(max-width:900px){.shell{margin:16px}.top{padding:20px 28px}.intro,.build,.impact{padding:32px 28px}.flow{gap:12px}.flow li:not(:last-child)::after{right:-11px;font-size:12px}.step{padding:14px 10px;min-height:215px}.step strong{font-size:14px}.step .summary{font-size:12px}footer{padding:22px 28px}}
+@media(max-width:680px){.shell{margin:0;border:0}.top{padding:20px;gap:12px}nav{gap:16px}.intro,.build,.impact{padding:30px 20px}h1{font-size:44px;margin-bottom:28px}.opening,.impact-body{grid-template-columns:1fr;gap:24px}.flow{grid-template-columns:1fr;gap:20px}.step{min-height:0;display:grid;grid-template-columns:26px 1fr 18px;gap:7px 12px;padding:16px}.step .number{grid-row:1/3}.step strong{font-size:16px}.step .summary{grid-column:2;font-size:13px}.plus{grid-column:3;grid-row:1/3;align-self:center}.flow li:not(:last-child)::after{content:"↓";right:50%;top:auto;bottom:-21px;font-size:16px}footer{padding:20px;flex-direction:column;gap:8px}.loop{font-size:12px}dialog{padding:22px}h2{font-size:27px}}
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div class="site-shell">
-    <header class="site-header">
-      <a class="wordmark" href="https://molleyoung.github.io/whoami/" aria-label="Molly Young overview">Molly Young</a>
-      <nav aria-label="Primary navigation"><a href="https://molleyoung.github.io/whoami/">Overview</a><a href="https://molleyoung.github.io/whoami/proof/" aria-current="page">Proof</a><a href="https://molleyoung.github.io/whoami/molly-young-resume-v1.1.0.pdf" target="_blank" rel="noopener">Resume</a><a href="mailto:mollyeyoung@gmail.com">Email</a><a href="https://www.linkedin.com/in/molleyoung/" target="_blank" rel="noopener">LinkedIn</a></nav>
-    </header>
-
-    <main id="main" class="case-main">
-      <a class="case-back" href="https://molleyoung.github.io/whoami/proof/"><span aria-hidden="true">←</span> Back to all proof</a>
-      <header class="case-hero">
-        <div><h1>Closed Won Review Agent</h1></div>
-      </header>
-
-      <section class="case-section">
-        <div class="section-heading">
-          <div><p class="section-kicker">The problem</p><h2>Closed Won did not mean a deal was ready for fulfillment.</h2></div>
-          <div class="section-copy"><p>As we connected Salesforce to NetSuite through Workato, incomplete or inconsistent deal data could move directly into fulfillment. Missing products or contracts, conflicting dates and terms, and the wrong customer, partner, billing entity, or address could delay fulfillment and create problems for revenue recognition or compensation.</p><p>Fixing the entire quote-to-cash workflow first would have slowed the integration and left the same downstream risk in place. We needed a practical control that could protect the handoff while the upstream process continued to improve.</p></div>
-        </div>
-      </section>
-
-      <section class="case-section alt">
-        <div class="section-heading">
-          <div><p class="section-kicker">The objective</p><h2>Move the integration forward without passing known problems downstream.</h2></div>
-          <div class="section-copy"><p>The review needed to identify known issues, explain what had to be corrected, and give Sales, Finance, and RevOps a shared view of why a deal had not moved to fulfillment.</p><p>It also needed to preserve human judgment. The automation supports the review; people remain responsible for correcting the deal and approving it for release.</p></div>
-        </div>
-      </section>
-
-      <section class="case-section">
-        <div class="section-heading">
-          <div><p class="section-kicker">What I built</p><h2>A human-in-the-loop review between Closed Won and fulfillment.</h2></div>
-          <div class="section-copy"><p>I built the process, checks, exception guidance, operating workflow, and Slack alerts that govern the handoff. A scheduled Python agent evaluates each eligible deal against the current business requirements. Deterministic checks handle explicit requirements, while Claude is used narrowly where interpretation or clearer remediation language is useful.</p><p>The result is not an autonomous approval. It is a consistent review that gives the responsible teams the information they need to correct issues, re-run the checks, and make the final decision.</p></div>
-        </div>
-
-        <div class="architecture-board" role="img" aria-label="Salesforce Closed Won deals enter an automated review. Results are shared in Slack for Sales, Finance, and RevOps. People correct issues and approve the deal before Workato sends it to NetSuite for fulfillment.">
-          <ol class="case-flow">
-            <li><span class="flow-number">01 · Trigger</span><h3>Closed Won in Salesforce</h3><p>Eligible deals enter the scheduled review.</p><small>Salesforce</small></li>
-            <li><span class="flow-number">02 · Review</span><h3>Run the current checks</h3><p>Python evaluates products, contracts, dates, terms, parties, addresses, and other known requirements.</p><small>Deterministic logic + narrow AI assistance</small></li>
-            <li><span class="flow-number">03 · Explain</span><h3>Publish the result</h3><p>Slack shows what passed, what failed, and what must be corrected.</p><small>Shared visibility for Sales, Finance, and RevOps</small></li>
-            <li class="human-stage"><span class="flow-number">04 · Correct</span><h3>Resolve the issue</h3><p>The responsible team fixes the source data and adds missing context.</p><small>Human-owned remediation</small></li>
-            <li class="human-stage"><span class="flow-number">05 · Decide</span><h3>Re-run and approve</h3><p>The same checks run again after correction; a person makes the final release decision.</p><small>Human approval</small></li>
-            <li class="measure-stage"><span class="flow-number">06 · Fulfill</span><h3>Send downstream</h3><p>Approved deals move through Workato to NetSuite for fulfillment.</p><small>Revenue recognition and compensation depend on this handoff</small></li>
-          </ol>
-          <div class="operator-band"><strong>Human control</strong><div><span>Sales corrects deal data</span><span>Finance reviews business requirements</span><span>RevOps maintains the process</span><span>Final approval stays with people</span></div></div>
-          <div class="feedback-loop"><strong>Continuous improvement</strong><span>Recurring failures inform upstream workflow changes; checks are revised or removed as the source process improves.</span></div>
-        </div>
-      </section>
-
-      <section class="case-section alt">
-        <div class="section-heading">
-          <div><p class="section-kicker">How it works</p><h2>Consistent checks, specific guidance, and a visible recheck loop.</h2></div>
-          <div class="section-copy"><p>The review separates repeatable business requirements from the cases that need interpretation. Instead of a generic rejection, the team receives specific guidance about what failed and why the deal cannot yet move to fulfillment.</p></div>
-        </div>
-        <div class="detail-grid">
-          <article><span>01</span><h3>Scheduled review</h3><p>Eligible Closed Won deals are evaluated on a consistent operating cadence.</p></article>
-          <article><span>02</span><h3>Explicit checks</h3><p>Known requirements are encoded as repeatable logic wherever possible.</p></article>
-          <article><span>03</span><h3>Narrow AI use</h3><p>Claude helps with limited interpretation and readable remediation guidance, not the approval decision.</p></article>
-          <article><span>04</span><h3>Shared visibility</h3><p>Sales, Finance, and RevOps can see the result, the expectation, and the reason a deal is held.</p></article>
-          <article><span>05</span><h3>Human correction</h3><p>The responsible team fixes the underlying data or supplies the missing context.</p></article>
-          <article><span>06</span><h3>Recheck and release</h3><p>Corrected deals return through the same review before a person approves the downstream handoff.</p></article>
-        </div>
-      </section>
-
-      <section class="case-section">
-        <div class="section-heading">
-          <div><p class="section-kicker">Improving the review</p><h2>The control changes as the upstream workflow improves.</h2></div>
-          <div class="section-copy"><p>The review was designed as an iterative operating process, not a fixed list of checks. Alerts make recurring problems visible across Sales, Finance, and RevOps. That evidence helps distinguish systemic gaps from true exceptions and shows where an upstream process, field, automation, or enablement change will prevent the issue earlier.</p><p>As those changes are made, the review is updated. Checks can be narrowed, revised, or removed when the source workflow reliably prevents the problem.</p></div>
-        </div>
-        <div class="improvement-flow" aria-label="Continuous improvement loop"><span>Review results</span><span>Recurring patterns</span><span>Root cause</span><span>Upstream change</span><span>Updated checks</span><span>Fewer exceptions</span></div>
-      </section>
-
-      <section class="case-section alt">
-        <div class="section-heading">
-          <div><p class="section-kicker">Impact</p><h2>A faster, more trusted handoff to fulfillment.</h2></div>
-          <div class="section-copy"><p>The process allowed the Salesforce-to-NetSuite integration to move forward without waiting for a full quote-to-cash redesign. It gave the teams a shared control for protecting fulfillment, revenue recognition, and compensation while upstream fixes were implemented.</p><p>Fulfillment had previously taken as long as a week in some cases. In the current process, deals move to fulfillment in about one day on average.</p></div>
-        </div>
-        <div class="evidence-grid" aria-label="Closed Won review outcomes">
-          <article class="scaled"><strong>~1 day</strong><span>average time to fulfillment in the current process</span><small>operating result</small></article>
-          <article><strong>Human</strong><span>final correction and approval remain with the responsible teams</span><small>control model</small></article>
-          <article><strong>Shared</strong><span>visibility across Sales, Finance, and RevOps</span><small>operating trust</small></article>
-          <article><strong>Iterative</strong><span>checks evolve as upstream issues are fixed</span><small>continuous improvement</small></article>
-        </div>
-      </section>
-
-      <aside class="related-proof"><p>Continue through the proof system.</p><div class="related-links"><a href="https://molleyoung.github.io/whoami/proof/new-business-lifecycle/">New Business Lifecycle</a><a href="https://molleyoung.github.io/whoami/proof/gtm-knowledge-layer/">GTM Knowledge Layer</a></div></aside>
-    </main>
-
-    <footer class="site-footer">
-      <div><strong>Molly Young</strong><span>St. Paul, MN</span></div>
-      <a href="https://www.linkedin.com/in/molleyoung/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="mailto:mollyeyoung@gmail.com">mollyeyoung@gmail.com</a>
-    </footer>
-  </div>
-</body>
-</html>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+<header class="top"><a class="brand" href="https://molleyoung.github.io/whoami/">Molly Young</a><nav aria-label="Primary"><a href="https://molleyoung.github.io/whoami/proof/">Portfolio</a><a href="https://www.linkedin.com/in/molleyoung/">LinkedIn</a><a href="mailto:mollyeyoung@gmail.com">Contact</a></nav></header>
+<main id="main">
+<section class="intro">
+<h1>Closed Won Review Agent</h1>
+<div class="opening">
+<article><h2>The problem</h2><p>Closed Won did not mean a deal was ready for fulfillment. As we connected Salesforce to NetSuite through Workato, missing products or contracts, conflicting dates and terms, and incorrect customer, partner, billing, or address details could move downstream and create problems for fulfillment, revenue recognition, or compensation.</p></article>
+<article><h2>The objective</h2><p>Move the integration forward without waiting for a full quote-to-cash redesign. Catch known issues before the handoff, explain what needed to be corrected, and give Sales, Finance, and RevOps a shared view of why a deal was held. Keep correction and final approval with people while improving the upstream workflow.</p></article>
+</div>
+</section>
+<section class="build" aria-labelledby="build-heading">
+<h2 id="build-heading">What I built</h2>
+<p class="lead">I built the review process, automated checks, exception guidance, and Slack alerts that govern the handoff from Closed Won to fulfillment. The agent supports the review; the responsible teams correct issues and make the final approval decision.</p>
+<p class="hint">Select a step to explore the implementation.</p>
+<ol class="flow" aria-label="Closed Won review process">
+<li><button class="step" data-dialog="source" aria-haspopup="dialog"><span class="number">01</span><strong>Salesforce</strong><span class="summary">Eligible Closed Won deals enter the scheduled review.</span><span class="plus" aria-hidden="true">+</span></button></li>
+<li><button class="step" data-dialog="checks" aria-haspopup="dialog"><span class="number">02</span><strong>Automated checks</strong><span class="summary">Evaluate known requirements and identify missing or conflicting data.</span><span class="plus" aria-hidden="true">+</span></button></li>
+<li><button class="step" data-dialog="slack" aria-haspopup="dialog"><span class="number">03</span><strong>Slack results</strong><span class="summary">Show what failed, why it matters, and what needs correction.</span><span class="plus" aria-hidden="true">+</span></button></li>
+<li class="human"><button class="step" data-dialog="approval" aria-haspopup="dialog"><span class="number">04</span><strong>Human approval</strong><span class="summary">Review the findings and decide whether the deal is ready.</span><span class="plus" aria-hidden="true">+</span></button></li>
+<li><button class="step" data-dialog="handoff" aria-haspopup="dialog"><span class="number">05</span><strong>Workato → NetSuite</strong><span class="summary">Approved deals move downstream for fulfillment.</span><span class="plus" aria-hidden="true">+</span></button></li>
+</ol>
+<button class="loop" data-dialog="correction" aria-haspopup="dialog">↶ Issues return for correction in the source data, then run through the same checks before approval. <span aria-hidden="true">+</span></button>
+<p class="technical"><strong>Python</strong> handles repeatable business checks. <strong>Claude</strong> assists with narrow interpretation and readable remediation guidance, not the approval decision.</p>
+</section>
+<section class="impact" aria-labelledby="impact-heading">
+<h2 id="impact-heading">The impact</h2>
+<div class="impact-body">
+<p>The process allowed the Salesforce-to-NetSuite integration to move forward while upstream fixes were implemented. Fulfillment had previously taken as long as a week in some cases; in the current process, deals move to fulfillment in <strong>about one day on average.</strong> Sales, Finance, and RevOps have a shared view of what is holding a deal and what needs to happen next.</p>
+<p>That visibility also distinguishes recurring problems from true exceptions. Review findings inform changes to fields, workflows, automation, and enablement. As those upstream changes prevent issues earlier, I narrow, revise, or remove checks. The review protects the handoff while helping improve the process behind it.</p>
+</div>
+</section>
+</main>
+<footer><span>Molly Young / Revenue Operations &amp; GTM Engineering</span><a href="mailto:mollyeyoung@gmail.com">mollyeyoung@gmail.com</a></footer>
+</div>
+<dialog id="source" aria-labelledby="source-title"><button class="close" aria-label="Close details">×</button><p class="dialog-label">Salesforce</p><h2 id="source-title">Define the review population</h2><p>Eligible Closed Won deals are evaluated on a consistent operating cadence. The review sits between the sales milestone and the downstream handoff, where incomplete or inconsistent deal data can affect fulfillment, revenue recognition, and compensation.</p><p>Salesforce supplies the deal data; entering the review does not itself approve a deal.</p></dialog>
+<dialog id="checks" aria-labelledby="checks-title"><button class="close" aria-label="Close details">×</button><p class="dialog-label">Python + narrow Claude assistance</p><h2 id="checks-title">Check the current business requirements</h2><p>A scheduled Python agent evaluates the deal against the current requirements. Repeatable logic handles explicit checks wherever possible.</p><ul><li>Products, dates, and commercial terms</li><li>Contracts and signature requirements</li><li>Customer, partner, and billing relationships</li><li>Addresses and other known fulfillment requirements</li></ul><p>Claude is used narrowly where interpretation or clearer remediation language is useful. It does not make the final approval decision.</p></dialog>
+<dialog id="slack" aria-labelledby="slack-title"><button class="close" aria-label="Close details">×</button><p class="dialog-label">Shared operating visibility</p><h2 id="slack-title">Make the result actionable</h2><p>Slack alerts show Sales, Finance, and RevOps what passed, what failed, and what needs to be corrected. Instead of a generic rejection, the team receives specific guidance about the expectation and why the deal cannot yet move to fulfillment.</p><p>The shared view helps teams resolve the immediate issue and distinguish recurring problems from true exceptions.</p></dialog>
+<dialog id="approval" aria-labelledby="approval-title"><button class="close" aria-label="Close details">×</button><p class="dialog-label">Human decision</p><h2 id="approval-title">Keep approval with people</h2><p>The automation supports review rather than autonomously releasing deals. People remain responsible for correcting the deal, supplying missing context, reviewing the findings, and making the final release decision.</p><p>Corrected deals run through the same checks again before approval.</p></dialog>
+<dialog id="handoff" aria-labelledby="handoff-title"><button class="close" aria-label="Close details">×</button><p class="dialog-label">Salesforce → Workato → NetSuite</p><h2 id="handoff-title">Protect downstream execution</h2><p>Approved deals move through Workato to NetSuite for fulfillment. The review provides a practical gate for the data and requirements that also affect revenue recognition and compensation.</p><p>This allowed the integration to progress without first redesigning the entire quote-to-cash workflow.</p></dialog>
+<dialog id="correction" aria-labelledby="correction-title"><button class="close" aria-label="Close details">×</button><p class="dialog-label">Correction and recheck</p><h2 id="correction-title">Fix the source, then review again</h2><p>The responsible team corrects the underlying data or supplies missing context. The same checks run again after correction, so the review requirements remain consistent before a person approves the handoff.</p><p>Recurring failures inform upstream process changes. Checks are narrowed, revised, or removed as those changes reliably prevent the underlying problem.</p></dialog>
+<script>
+document.querySelectorAll('[data-dialog]').forEach(button=>button.addEventListener('click',()=>document.getElementById(button.dataset.dialog).showModal()));
+document.querySelectorAll('dialog').forEach(dialog=>{
+ dialog.querySelector('.close').addEventListener('click',()=>dialog.close());
+ dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
+});
+</script>
+</body></html>
