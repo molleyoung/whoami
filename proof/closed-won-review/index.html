@@ -3,81 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A governed Closed Won review agent that catches fulfillment issues and accelerates approval." />
-  <title>Closed Won Review Agent | Molly Young</title>
-  <link rel="stylesheet" href="../../portfolio.css" />
-  <link rel="stylesheet" href="../case-study.css" />
+  <meta name="description" content="A human-in-the-loop Closed Won review that protects fulfillment, revenue recognition, and compensation while Salesforce-to-NetSuite integration evolves." />
+  <title>Closed Won Review | Molly Young</title>
+  <link rel="stylesheet" href="https://molleyoung.github.io/whoami/portfolio.css" />
+  <link rel="stylesheet" href="https://molleyoung.github.io/whoami/proof/case-study.css" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="site-shell">
     <header class="site-header">
-      <a class="wordmark" href="../../" aria-label="Molly Young overview">Molly Young</a>
-      <nav aria-label="Primary navigation"><a href="../../">Overview</a><a href="../" aria-current="page">Proof</a><a href="../../molly-young-resume-v1.1.0.pdf" target="_blank" rel="noopener">Resume</a><a href="mailto:mollyeyoung@gmail.com">Email</a><a href="https://www.linkedin.com/in/molleyoung/" target="_blank" rel="noopener">LinkedIn</a></nav>
+      <a class="wordmark" href="https://molleyoung.github.io/whoami/" aria-label="Molly Young overview">Molly Young</a>
+      <nav aria-label="Primary navigation"><a href="https://molleyoung.github.io/whoami/">Overview</a><a href="https://molleyoung.github.io/whoami/proof/" aria-current="page">Proof</a><a href="https://molleyoung.github.io/whoami/molly-young-resume-v1.1.0.pdf" target="_blank" rel="noopener">Resume</a><a href="mailto:mollyeyoung@gmail.com">Email</a><a href="https://www.linkedin.com/in/molleyoung/" target="_blank" rel="noopener">LinkedIn</a></nav>
     </header>
 
     <main id="main" class="case-main">
-      <a class="case-back" href="../"><span aria-hidden="true">←</span> Back to all proof</a>
+      <a class="case-back" href="https://molleyoung.github.io/whoami/proof/"><span aria-hidden="true">←</span> Back to all proof</a>
       <header class="case-hero">
-        <div><p class="case-kicker">Revenue process / governed handoff</p><h1>Closed Won Review Agent</h1><p class="case-thesis">A scheduled control point that clears clean deals for fulfillment and returns specific issues for remediation before downstream execution begins.</p></div>
-        <aside class="role-card" aria-label="My role"><span>My role</span><p>Control design · deterministic validation · orchestration · exception experience</p></aside>
+        <div><h1>Closed Won Review Agent</h1></div>
       </header>
 
       <section class="case-section">
         <div class="section-heading">
-          <div><p class="section-kicker">Risk</p><h2>Closed Won was a milestone, not proof that a deal was ready.</h2></div>
-          <div class="section-copy"><p>Fulfillment depends on complete products, dates, billing details, contracts, signatures, addresses, and other operating requirements. A missing or conflicting value discovered downstream creates delay and manual coordination at the most sensitive handoff.</p><p>The control needed to catch known issues quickly without turning every clean deal into a manual review queue.</p></div>
+          <div><p class="section-kicker">The problem</p><h2>Closed Won did not mean a deal was ready for fulfillment.</h2></div>
+          <div class="section-copy"><p>As we connected Salesforce to NetSuite through Workato, incomplete or inconsistent deal data could move directly into fulfillment. Missing products or contracts, conflicting dates and terms, and the wrong customer, partner, billing entity, or address could delay fulfillment and create problems for revenue recognition or compensation.</p><p>Fixing the entire quote-to-cash workflow first would have slowed the integration and left the same downstream risk in place. We needed a practical control that could protect the handoff while the upstream process continued to improve.</p></div>
         </div>
       </section>
 
       <section class="case-section alt">
         <div class="section-heading">
-          <div><p class="section-kicker">Architecture</p><h2>A scheduled review with an explicit decision gate.</h2></div>
-          <div class="section-copy"><p>Salesforce remains the deal and approval home. A scheduled Python validation engine evaluates the Closed Won population, uses deterministic logic for explicit business rules, and applies AI only to narrow interpretation and readable remediation tasks.</p></div>
-        </div>
-        <div class="architecture-board" role="img" aria-label="Salesforce Closed Won deals enter a scheduled Python validation engine. Deterministic rules and narrow AI assistance feed a decision gate. Passing deals are approved for downstream execution. Issues create specific remediation and return for recheck.">
-          <div class="control-flow"><div class="control-node"><span>System of record</span><strong>Salesforce Closed Won deals</strong><small>scheduled review population</small></div><i>→</i><div class="control-node"><span>Control engine</span><strong>Python validation</strong><small>rules · orchestration · status handling</small></div><i>→</i><div class="control-node"><span>Decision gate</span><strong>PASS / ISSUE</strong><small>explicit result written to the operating workflow</small></div></div>
-          <div class="logic-split">
-            <article><span>Deterministic logic</span><h3>Explicit business rules</h3><ul><li>Products and dates</li><li>Billing and contract requirements</li><li>Signatures and other structured checks</li><li>Consistent status handling</li></ul></article>
-            <article><span>Narrow AI assistance</span><h3>Interpretation, not authority</h3><ul><li>Address interpretation where structured logic is insufficient</li><li>Human-readable remediation guidance</li><li>No replacement for deterministic checks</li><li>No autonomous release decision</li></ul></article>
-          </div>
-          <div class="release-paths">
-            <article><span>Pass path</span><h3>Clear the clean deal</h3><p>Write the approved state in Salesforce so shipping, invoicing, provisioning, and other downstream work can proceed.</p></article>
-            <article><span>Issue path</span><h3>Return a specific fix</h3><p>Alert the responsible operating channel with remediation guidance, then place the deal back into the review loop.</p></article>
-          </div>
+          <div><p class="section-kicker">The objective</p><h2>Move the integration forward without passing known problems downstream.</h2></div>
+          <div class="section-copy"><p>The review needed to identify known issues, explain what had to be corrected, and give Sales, Finance, and RevOps a shared view of why a deal had not moved to fulfillment.</p><p>It also needed to preserve human judgment. The automation supports the review; people remain responsible for correcting the deal and approving it for release.</p></div>
         </div>
       </section>
 
       <section class="case-section">
         <div class="section-heading">
-          <div><p class="section-kicker">Control design</p><h2>Fast for clean deals. Precise for exceptions.</h2></div>
-          <div class="section-copy"><p>The design separates rules that can be evaluated reliably from context that needs interpretation. It also makes the result operational: a pass changes the deal state, while an issue identifies what must be corrected before recheck.</p></div>
+          <div><p class="section-kicker">What I built</p><h2>A human-in-the-loop review between Closed Won and fulfillment.</h2></div>
+          <div class="section-copy"><p>I built the process, checks, exception guidance, operating workflow, and Slack alerts that govern the handoff. A scheduled Python agent evaluates each eligible deal against the current business requirements. Deterministic checks handle explicit requirements, while Claude is used narrowly where interpretation or clearer remediation language is useful.</p><p>The result is not an autonomous approval. It is a consistent review that gives the responsible teams the information they need to correct issues, re-run the checks, and make the final decision.</p></div>
         </div>
-        <div class="detail-grid">
-          <article><span>01</span><h3>Scheduled population</h3><p>Review eligible Closed Won deals on a consistent operating cadence.</p></article>
-          <article><span>02</span><h3>Deterministic first</h3><p>Encode explicit business requirements as repeatable checks wherever possible.</p></article>
-          <article><span>03</span><h3>Narrow assistance</h3><p>Use AI only where interpretation or clearer remediation language adds value.</p></article>
-          <article><span>04</span><h3>Visible outcome</h3><p>Keep approval and issue status in Salesforce, the operating system of record.</p></article>
-          <article><span>05</span><h3>Actionable exception</h3><p>Tell operators what failed and what is needed instead of returning a generic rejection.</p></article>
-          <article><span>06</span><h3>Recheck loop</h3><p>Return corrected deals to the same control so release criteria remain consistent.</p></article>
+
+        <div class="architecture-board" role="img" aria-label="Salesforce Closed Won deals enter an automated review. Results are shared in Slack for Sales, Finance, and RevOps. People correct issues and approve the deal before Workato sends it to NetSuite for fulfillment.">
+          <ol class="case-flow">
+            <li><span class="flow-number">01 · Trigger</span><h3>Closed Won in Salesforce</h3><p>Eligible deals enter the scheduled review.</p><small>Salesforce</small></li>
+            <li><span class="flow-number">02 · Review</span><h3>Run the current checks</h3><p>Python evaluates products, contracts, dates, terms, parties, addresses, and other known requirements.</p><small>Deterministic logic + narrow AI assistance</small></li>
+            <li><span class="flow-number">03 · Explain</span><h3>Publish the result</h3><p>Slack shows what passed, what failed, and what must be corrected.</p><small>Shared visibility for Sales, Finance, and RevOps</small></li>
+            <li class="human-stage"><span class="flow-number">04 · Correct</span><h3>Resolve the issue</h3><p>The responsible team fixes the source data and adds missing context.</p><small>Human-owned remediation</small></li>
+            <li class="human-stage"><span class="flow-number">05 · Decide</span><h3>Re-run and approve</h3><p>The same checks run again after correction; a person makes the final release decision.</p><small>Human approval</small></li>
+            <li class="measure-stage"><span class="flow-number">06 · Fulfill</span><h3>Send downstream</h3><p>Approved deals move through Workato to NetSuite for fulfillment.</p><small>Revenue recognition and compensation depend on this handoff</small></li>
+          </ol>
+          <div class="operator-band"><strong>Human control</strong><div><span>Sales corrects deal data</span><span>Finance reviews business requirements</span><span>RevOps maintains the process</span><span>Final approval stays with people</span></div></div>
+          <div class="feedback-loop"><strong>Continuous improvement</strong><span>Recurring failures inform upstream workflow changes; checks are revised or removed as the source process improves.</span></div>
         </div>
       </section>
 
       <section class="case-section alt">
         <div class="section-heading">
-          <div><p class="section-kicker">Measured result</p><h2>The latest iteration cut mean approval time below one day.</h2></div>
-          <div class="section-copy"><p>Automated the control point between Closed Won and fulfillment, clearing clean deals and catching issues before downstream execution. The latest iteration reduced mean approval time from about 2.6 days to under one day.</p></div>
+          <div><p class="section-kicker">How it works</p><h2>Consistent checks, specific guidance, and a visible recheck loop.</h2></div>
+          <div class="section-copy"><p>The review separates repeatable business requirements from the cases that need interpretation. Instead of a generic rejection, the team receives specific guidance about what failed and why the deal cannot yet move to fulfillment.</p></div>
         </div>
-        <div class="evidence-grid" aria-label="Closed Won review result">
-          <article><strong>2.6 days</strong><span>mean approval time before the latest iteration</span><small>comparison starting point</small></article>
-          <article class="scaled"><strong>&lt; 1 day</strong><span>mean approval time after the latest iteration</span><small>measured result</small></article>
-          <article><strong>Scheduled</strong><span>review rather than an ad hoc queue</span><small>operating model</small></article>
-          <article><strong>Recheck</strong><span>exceptions return after remediation</span><small>closed control loop</small></article>
+        <div class="detail-grid">
+          <article><span>01</span><h3>Scheduled review</h3><p>Eligible Closed Won deals are evaluated on a consistent operating cadence.</p></article>
+          <article><span>02</span><h3>Explicit checks</h3><p>Known requirements are encoded as repeatable logic wherever possible.</p></article>
+          <article><span>03</span><h3>Narrow AI use</h3><p>Claude helps with limited interpretation and readable remediation guidance, not the approval decision.</p></article>
+          <article><span>04</span><h3>Shared visibility</h3><p>Sales, Finance, and RevOps can see the result, the expectation, and the reason a deal is held.</p></article>
+          <article><span>05</span><h3>Human correction</h3><p>The responsible team fixes the underlying data or supplies the missing context.</p></article>
+          <article><span>06</span><h3>Recheck and release</h3><p>Corrected deals return through the same review before a person approves the downstream handoff.</p></article>
         </div>
-        <div class="honest-read"><strong>Boundary</strong><ul><li>The engine accelerates review and identifies exceptions; it does not replace the owners responsible for deal accuracy.</li><li>AI is intentionally narrow. Deterministic business rules remain the authority for release.</li><li>This case study reports the confirmed approval-time result and omits unconfirmed volume and check-count claims.</li></ul></div>
       </section>
 
-      <aside class="related-proof"><p>Continue through the proof system.</p><div class="related-links"><a href="../new-business-lifecycle/">New Business Lifecycle</a><a href="../gtm-knowledge-layer/">GTM Knowledge Layer</a></div></aside>
+      <section class="case-section">
+        <div class="section-heading">
+          <div><p class="section-kicker">Improving the review</p><h2>The control changes as the upstream workflow improves.</h2></div>
+          <div class="section-copy"><p>The review was designed as an iterative operating process, not a fixed list of checks. Alerts make recurring problems visible across Sales, Finance, and RevOps. That evidence helps distinguish systemic gaps from true exceptions and shows where an upstream process, field, automation, or enablement change will prevent the issue earlier.</p><p>As those changes are made, the review is updated. Checks can be narrowed, revised, or removed when the source workflow reliably prevents the problem.</p></div>
+        </div>
+        <div class="improvement-flow" aria-label="Continuous improvement loop"><span>Review results</span><span>Recurring patterns</span><span>Root cause</span><span>Upstream change</span><span>Updated checks</span><span>Fewer exceptions</span></div>
+      </section>
+
+      <section class="case-section alt">
+        <div class="section-heading">
+          <div><p class="section-kicker">Impact</p><h2>A faster, more trusted handoff to fulfillment.</h2></div>
+          <div class="section-copy"><p>The process allowed the Salesforce-to-NetSuite integration to move forward without waiting for a full quote-to-cash redesign. It gave the teams a shared control for protecting fulfillment, revenue recognition, and compensation while upstream fixes were implemented.</p><p>Fulfillment had previously taken as long as a week in some cases. In the current process, deals move to fulfillment in about one day on average.</p></div>
+        </div>
+        <div class="evidence-grid" aria-label="Closed Won review outcomes">
+          <article class="scaled"><strong>~1 day</strong><span>average time to fulfillment in the current process</span><small>operating result</small></article>
+          <article><strong>Human</strong><span>final correction and approval remain with the responsible teams</span><small>control model</small></article>
+          <article><strong>Shared</strong><span>visibility across Sales, Finance, and RevOps</span><small>operating trust</small></article>
+          <article><strong>Iterative</strong><span>checks evolve as upstream issues are fixed</span><small>continuous improvement</small></article>
+        </div>
+      </section>
+
+      <aside class="related-proof"><p>Continue through the proof system.</p><div class="related-links"><a href="https://molleyoung.github.io/whoami/proof/new-business-lifecycle/">New Business Lifecycle</a><a href="https://molleyoung.github.io/whoami/proof/gtm-knowledge-layer/">GTM Knowledge Layer</a></div></aside>
     </main>
 
     <footer class="site-footer">
